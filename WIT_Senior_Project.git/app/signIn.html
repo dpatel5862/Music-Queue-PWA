@@ -2,7 +2,7 @@
 	<head>
 		<title>Music Queue Sign In page</title>
     <meta name="google-signin-scope" content="profile email">
-    <meta name="google-signin-client_id" content="YOUR_CLIENT_ID.apps.googleusercontent.com">
+    <meta name="google-signin-client_id" content="955128834487-8snunlnattcp1l1fkic0ojm2d6jsor09.apps.googleusercontent.com">
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 		<link href="styles/css/bootstrap.css" rel="stylesheet" />
 
@@ -12,20 +12,26 @@
 
 	<div class="container-fluid">
 
-        <nav class="navbar navbar-default navbar-fixed">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="/index.html">Music Queue PWA</a>
-                </div>
-            </div>
-        </nav>
-
 		<center><h1> Sign In </h1></center>
+    <hr>
 
-    <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
-     
+    <center>
+    <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark" ></div>
 
-      <script>
+    <a href="/index.html" onclick="signOut();">Sign out</a>
+    </center>
+    
+  </div>
+    <script>
+      function signOut() {
+      var auth2 = gapi.auth2.getAuthInstance();
+      auth2.signOut().then(function () {
+      console.log('User signed out.');
+       });
+      }
+    </script>
+    
+    <script>
       function onSignIn(googleUser) {
         // Useful data for your client-side scripts:
         var profile = googleUser.getBasicProfile();
@@ -40,8 +46,8 @@
         var id_token = googleUser.getAuthResponse().id_token;
         console.log("ID Token: " + id_token);
       };
-    </script>
-    </div>
+      </script>
+  </div>
 
 
   		<hr class="featurette-divider">
