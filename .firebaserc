@@ -1,0 +1,6 @@
+{
+  "projects": {
+    "default": "music-queue-pwa",
+    "staging": "musicqueue-pwa"
+  }
+}
