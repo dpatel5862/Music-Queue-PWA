@@ -2,13 +2,12 @@
 	<head>
 		<title>Music Queue PWA</title>
 		<link href="CSS/bootstrap.css" rel="stylesheet" />
-		<meta name="google-signin-client_id" content="955128834487-8snunlnattcp1l1fkic0ojm2d6jsor09.apps.googleusercontent.com">
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
 	</head>
 
 	<body>
 
 	<div class="container-fluid">
+
 
 <!-- Nav -->
         <nav class="navbar navbar-default navbar-fixed">
@@ -32,7 +31,12 @@
   			</center>
 		</div>
 
+
 		<center><h1> Join Party </h1></center>
+
+    <div class="panel panel-default">
+  <!-- Default panel contents -->
+  <div class="panel-heading">Join Open Music Queue's</div>
 
  <!-- Table -->
 		<table class="table table-hover">
@@ -66,9 +70,10 @@
   						<td><a class="btn btn-primary btn-sm" href="#" role="button">Join</a></td>
   				</tr> 
   			</tbody>	
-  		</table>
+  	</table>
 
-  		<hr class="featurette-divider">
+  		</div>
+      <hr class="featurette-divider">
 
  <!-- Footer -->
         <footer>
@@ -90,49 +95,24 @@
     	<div class="modal-content">
      	
      	<div class="modal-header">
-        	<h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-        	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          	<span aria-hidden="true">&times;</span>
-        	</button>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+          </button>
+        	<h2 class="modal-title" id="exampleModalLabel">Create a Music Sharing Group!</h2>
       	</div>
 
-      	<div class="modal-body">
+      <div class="modal-body">
      	    <form>
-  <div class="form-group">
-    <label for="Name">Name your Music Queue</label>
-    <input type="text" class="form-control" id="Name" aria-describedby="emailHelp" placeholder="Enter name">
-  </div>
-  <div class="form-group">
-    <label for="exampleInputPassword1">Password</label>
-    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-  </div>
-  <div class="form-group">
-    <label for="exampleSelect1">Max Number of Joinable Friends</label>
-    <select class="form-control" id="exampleSelect1">
-      <option>1</option>
-      <option>2</option>
-      <option>3</option>
-      <option>4</option>
-      <option>5</option>
-    </select>
-  </div>
-  <div class="form-group">
-    <label for="exampleInputFile">File input</label>
-    <input type="file" class="form-control-file" id="exampleInputFile" aria-describedby="fileHelp">
-    <small id="fileHelp" class="form-text text-muted">This is some placeholder block-level help text for the above input. It's a bit lighter and easily wraps to a new line.</small>
-  </div>
-  <div class="form-check">
-    <label class="form-check-label">
-      <input type="checkbox" class="form-check-input">
-      Check me out
-    </label>
-  </div>
-</form>
-      	</div>
+            <div class="form-group">
+              <center><label for="Name">Name your Music Queue</label></center>
+              <input type="text" class="form-control" id="Name" aria-describedby="emailHelp" placeholder="Enter name">
+            </div>
+          </form>
+      </div>
 
       	<div class="modal-footer">
         	<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        	<button type="button" class="btn btn-primary">Save changes</button>
+        	<button type="button" class="btn btn-primary">Create</button>
       	</div>
 
     	</div>
