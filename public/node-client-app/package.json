@@ -1,0 +1,27 @@
+{
+  "name": "music-queue-pwa",
+  "version": "1.0.0",
+  "description": "A application that allows multiple users to collaborate on a single joined playlist.",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "firebase": "^4.1.1"
+  },
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dpatel5862/WIT_Senior_Project.git"
+  },
+  "keywords": [
+    "music",
+    "spotify"
+  ],
+  "author": "Dhruv Patel",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dpatel5862/WIT_Senior_Project/issues"
+  },
+  "homepage": "https://github.com/dpatel5862/WIT_Senior_Project#readme"
+}
