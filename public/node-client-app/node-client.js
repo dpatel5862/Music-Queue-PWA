@@ -2,8 +2,8 @@ var firebase = require(‘firebase’);
 
 firebase.initializeApp({
  appName: "Music Queue",
- serviceAccount: "./service-account.json”,
- authDomain: "musicqueue-pwa.firebaseapp.com”,
+ serviceAccount: "/service-account.json",
+ authDomain: "musicqueue-pwa.firebaseapp.com",
  databaseURL: "https://musicqueue-pwa.firebaseio.com",
  storageBucket: "musicqueue-pwa.appspot.com"
  apiKey: "AIzaSyDuYE2a2Wh6yIb6aXplGS2INdjohnphOKE",
