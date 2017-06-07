@@ -7,7 +7,8 @@
     <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
   </head>
 <body>
-  <div class="container-fluid">
+
+<div class="container-fluid">
 
      <!-- Nav -->
         <nav class="navbar navbar-default navbar-fixed">
@@ -21,10 +22,14 @@
                 </div>
             </div>
         </nav>
+</div>
 
-  <iframe src="https://open.spotify.com/embed?uri=spotify:user:smacklax007:playlist:0lznVcCvIokkEEIqRmUCGu" width="640" height="720" frameborder="0" allowtransparency="true"></iframe>
+<div class="container-fluid">
+  <center><iframe src="https://open.spotify.com/embed?uri=spotify:user:smacklax007:playlist:0lznVcCvIokkEEIqRmUCGu" width="640" height="720" frameborder="0" allowtransparency="true"></iframe></center>
   <script type="text/javascript" src="scripts/JS/spotify_auth.js" ></script>
-  
+</div>
+
+<div class="container-fluid"> 
      <div id="login">
        <h1>This is an example of the Implicit Grant flow</h1>
        <button id="login-button" class="btn btn-primary">Log in with Spotify</button>
@@ -34,10 +39,8 @@
        <div id="user-profile"></div>
        <div id="oauth"></div>
      </div>
-
-   </div>
-
 </div>
+
    <script id="user-profile-template" type="text/x-handlebars-template">
      <h1>Logged in as {{display_name}}</h1>
      <div class="media">
