@@ -33,14 +33,11 @@
   			</center>
 		</div>
 
-
 	<center>
   <h1> Join Party </h1>
   </center>
 
-  <div class="panel panel-default">
-  <!-- Default panel contents -->
-  <div class="panel-heading">Join Open Music Queue's</div>
+
 
  <!-- Table -->
 		<table class="table table-hover">
@@ -87,6 +84,7 @@
                     <h6>Copyright &copy; Music Queue 2017</h6>
                     <h6> Powered By: Bootstrap | Spotify | Youtube </h6>
                     </center>
+                    <br>
                 </div>
             </div>
         </footer>
@@ -109,21 +107,21 @@
      	    <form>
             <div class="form-group">
               <center><label for="Name">Name your Music Queue</label></center>
-              <input type="text" class="form-control" id="Name" aria-describedby="emailHelp" placeholder="Enter name">
+              <input type="text" class="form-control" id="playlistName" aria-describedby="emailHelp" placeholder="Enter name">
             </div>
           </form>
       </div>
 
       	<div class="modal-footer">
         	<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        	<button type="button" class="btn btn-primary">Create</button>
+        	<button type="button" id="modalSubmit" class="btn btn-primary">Create</button>
       	</div>
 
     	</div>
   		</div>
 		</div>
 
-
+    <script src="scripts/JS/modal.js"></script>
 	  <script src="scripts/JS/bootstrap.min.js"></script>
 	</body>
 </html>
