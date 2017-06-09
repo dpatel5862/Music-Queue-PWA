@@ -8,3 +8,5 @@
  	console.log(Name);
  	window.location = 'playlist_template.html';
 });
+
+
