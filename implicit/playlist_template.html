@@ -3,6 +3,7 @@
 <head>
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
     <title>Example of the Authorization Code flow with Spotify</title>
+    <script src="spotify-web-api.js"></script>
   </head>
 <body>
   <iframe id="list" src="https://open.spotify.com/embed?uri=spotify:user:smacklax007:playlist:29dJCiZ11U6O5Swx05c2tD" width="640" height="720" frameborder="0" allowtransparency="true"></iframe>
@@ -111,13 +112,18 @@
                headers: {
                  'Authorization': 'Bearer ' + access_token
                },
-               success: function(response) {
-                 userProfilePlaceholder.innerHTML = userProfileTemplate(response);
+
+
+
+                success: function(response) {
+                    userProfilePlaceholder.innerHTML = userProfileTemplate(response);
 
                  $('#login').hide();
                  $('#loggedin').show();
                }
+
            });
+
          } else {
              $('#login').show();
              $('#loggedin').hide();
@@ -131,7 +137,7 @@
            var state = generateRandomString(16);
 
            localStorage.setItem(stateKey, state);
-           var scope = 'user-read-private user-read-email playlist-read-private playlist-modify-private';
+           var scope = 'user-read-private user-read-email playlist-read-private playlist-read-collaborative playlist-modify-public playlist-modify-private';
 
            var url = 'https://accounts.spotify.com/authorize';
            url += '?response_type=token';
@@ -140,14 +146,18 @@
            url += '&redirect_uri=' + encodeURIComponent(redirect_uri);
            url += '&state=' + encodeURIComponent(state);
 
-           window.location = url;
+            var spotifyApi = new SpotifyWebApi();
+           spotifyApi.setAccessToken(access_token);
+           spotifyApi.getUserPlaylists(client_id)  // note that we don't pass a user id
+             .then(function(data) {
+               console.log('User playlists', data);
+             }, function(err) {
+               console.error(err);
+             });
+        ;
          }, false);
        }
-     })();
-     document.getElementById('list-button').addEventListener('click', function() {
-      var src = $('#playlist').val()
-      document.getElementById('list').setAttribute('src', "https://open.spotify.com/embed?uri=" +src);
-  });
+  })();
    </script>
   </body>
 </html>
