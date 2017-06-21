@@ -2,7 +2,7 @@
 // Project: https://github.com/JMPerez/spotify-web-api-js
 // Definitions by: Niels Kristian Hansen Skovmand <https://github.com/skovmand>
 
-/// <reference path="./spotify-api.d.ts" />
+/// <reference path="spotify-web-api-js/spotify-api.d.ts" />
 
 export as namespace SpotifyWebApi;
 

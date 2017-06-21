@@ -9,25 +9,6 @@
 
 var express = require('express'); // Express web server framework
 var app = express();
-app.use(express.static(__dirname + '/public'));
+app.use(express.static(__dirname + '/implicit'));
 console.log('Listening on 8887');
 app.listen(8887);
-var request = require('request');
-
-var headers = {
-    'Authorization': 'Bearer+access_token'
-};
-var options = {
-    url: 'https://api.spotify.com/v1/users/me/playlists',
-    headers: headers
-};
-function callback(error, response, body) {
-    if (!error && response.statusCode == 200) {
-        console.log(body);
-        var url='https://api.spotify.com/v1/users/me/playlists';
-
-    }
-    return document.getElementById('list').setAttribute('src', url);
-}
-
-request(options, callback);
