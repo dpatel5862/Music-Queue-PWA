@@ -48,7 +48,7 @@
 
  const joinPartyTable = document.getElementById('joinPartyTable');
  const hostedPartyTable = document.getElementById('hostedPartyTable');
-const signInHeader = document.getElementById('signInHeader');
+//const signInHeader = document.getElementById('signInHeader');
 
 
 //Add realtime listener
@@ -61,7 +61,7 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
     btnSignUp.classList.add('hide');
     txtEmail.classList.add('hide');
     txtPassword.classList.add('hide');
-    signInHeader.classList.add('hide');
+   // signInHeader.classList.add('hide');
     joinPartyTable.classList.remove('hide');
     hostedPartyTable.classList.remove('hide');
 	}
@@ -72,7 +72,7 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
     btnSignUp.classList.remove('hide');
     txtEmail.classList.remove('hide');
     txtPassword.classList.remove('hide');
-    signInHeader.classList.remove('hide');
+    //signInHeader.classList.remove('hide');
     joinPartyTable.classList.add('hide');
     hostedPartyTable.classList.add('hide');
 

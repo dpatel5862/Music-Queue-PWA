@@ -1,0 +1,28 @@
+[debug] [2017-06-25T16:18:15.579Z] ----------------------------------------------------------------------
+[debug] [2017-06-25T16:18:15.583Z] Command:      /usr/local/bin/node /usr/local/bin/firebase serve
+[debug] [2017-06-25T16:18:15.584Z] CLI Version:  3.9.1
+[debug] [2017-06-25T16:18:15.584Z] Platform:     darwin
+[debug] [2017-06-25T16:18:15.584Z] Node Version: v6.10.3
+[debug] [2017-06-25T16:18:15.599Z] Time:         Sun Jun 25 2017 12:18:15 GMT-0400 (EDT)
+[debug] [2017-06-25T16:18:15.599Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2017-06-25T16:18:15.742Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2017-06-25T16:18:15.743Z] > authorizing via signed-in user
+[debug] [2017-06-25T16:18:15.747Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/musicqueue-pwa  
+ Sun Jun 25 2017 12:18:15 GMT-0400 (EDT)
+[debug] [2017-06-25T16:18:16.700Z] <<< HTTP RESPONSE 200
+[debug] [2017-06-25T16:18:16.702Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/musicqueue-pwa/tokens  
+ Sun Jun 25 2017 12:18:16 GMT-0400 (EDT)
+[debug] [2017-06-25T16:18:17.832Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from '/Users/Dhruv/Public/Senior_Project'...
+[info] 
+[debug] [2017-06-25T16:18:17.837Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/musicqueue-pwa  
+ Sun Jun 25 2017 12:18:17 GMT-0400 (EDT)
+[debug] [2017-06-25T16:18:18.252Z] <<< HTTP RESPONSE 200
+[debug] [2017-06-25T16:18:18.253Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/273391193125/clients/_:getWebAppConfig  
+ Sun Jun 25 2017 12:18:18 GMT-0400 (EDT)
+[debug] [2017-06-25T16:18:19.060Z] <<< HTTP RESPONSE 200
+[info] i  hosting: Serving hosting files from: public
+[info] ✔  hosting: Local server: http://localhost:5000
+
