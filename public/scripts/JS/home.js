@@ -48,7 +48,10 @@
 
  const joinPartyTable = document.getElementById('joinPartyTable');
  const hostedPartyTable = document.getElementById('hostedPartyTable');
-const signInHeader = document.getElementById('signInHeader');
+ const signInHeader = document.getElementById('signInHeader');
+ const playlistName = document.getElementById('playlistName')
+ const modalSubmit = document.getElementById('modalSubmit')
+
 
 
 //Add realtime listener
@@ -64,6 +67,8 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
     signInHeader.classList.add('hide');
     joinPartyTable.classList.remove('hide');
     hostedPartyTable.classList.remove('hide');
+    playlistName.classList.remove('hide');
+    modalSubmit.classList.remove('hide');
 	}
 	else {
 		console.log('not logged in');
@@ -75,7 +80,8 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
     signInHeader.classList.remove('hide');
     joinPartyTable.classList.add('hide');
     hostedPartyTable.classList.add('hide');
-
+    playlistName.classList.add('hide');
+    modalSubmit.classList.add('hide');
 	}
 
 });

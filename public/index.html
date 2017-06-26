@@ -1,10 +1,10 @@
 <html>
-	<head>
-		<title>Music Queue PWA</title>
+  <head>
+    <title>Music Queue PWA</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<link href="CSS/bootstrap.css" rel="stylesheet" />
+    <link href="CSS/bootstrap.css" rel="stylesheet" />
     <link rel="manifest" href="/manifest.json">
 
     <!-- Add to home screen for Safari on iOS -->
@@ -18,11 +18,11 @@
 
     <script src="https://www.gstatic.com/firebasejs/4.1.1/firebase.js"></script>
     <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
-	</head>
+  </head>
 
-	<body>
+  <body>
 
-	<div class="container-fluid">
+  <div class="container-fluid">
 <!-- Nav -->
         <nav class="navbar navbar-inverse navbar-fixed">
             <div class="container-fluid">
@@ -46,12 +46,12 @@
 
   <div class="container-fluid">
 <!-- Jumbotron -->
-		<div class="jumbotron">
-  			<center>
-  			<h1>Music Queue Progressive Web App</h1>
-  			<p>This is where we will explain what our app does, how to join party, create party, and how to add to a playlist.</p>
-  			</center>
-		</div>
+    <div class="jumbotron">
+        <center>
+        <h1>Music Queue Progressive Web App</h1>
+        <p>This is where we will explain what our app does, how to join party, create party, and how to add to a playlist.</p>
+        </center>
+    </div>
   </div>
 
 <!--- Sign IN -->
@@ -106,38 +106,38 @@
     <p>Quick description on how to join parties</p>
   </div>
  <!-- Table -->
-		<table class="table table-hover" id="joinPartyTable">
-  			<thead> 
-  				<tr> 
-  					<th>#</th> 
-  					<th>Party Name</th> 
-  					<th>Host</th>  
-  					<th>Join</th>
-  				</tr> 
-  			</thead>	
-  			<tbody> 
-  				<tr> 
-  					<th scope="row">1</th> 
-  						<td>Mark</td> 
-  						<td>Otto</td> 
-  						<td><a class="btn btn-primary btn-sm" href="#" role="button">Join</a></td>
+    <table class="table table-hover" id="joinPartyTable">
+        <thead> 
+          <tr> 
+            <th>#</th> 
+            <th>Party Name</th> 
+            <th>Host</th>  
+            <th>Join</th>
+          </tr> 
+        </thead>  
+        <tbody> 
+          <tr> 
+            <th scope="row">1</th> 
+              <td>Mark</td> 
+              <td>Otto</td> 
+              <td><a class="btn btn-primary btn-sm" href="#" role="button">Join</a></td>
 
-  				</tr> 
-  				<tr> 
-  					<th scope="row">2</th> 
-  						<td>Jacob</td> 
-  						<td>Thornton</td> 
-  						<td><a class="btn btn-primary btn-sm" href="#" role="button">Join</a></td>
+          </tr> 
+          <tr> 
+            <th scope="row">2</th> 
+              <td>Jacob</td> 
+              <td>Thornton</td> 
+              <td><a class="btn btn-primary btn-sm" href="#" role="button">Join</a></td>
 
-  				</tr> 
-  				<tr> 
-  					<th scope="row">3</th> 
-  						<td>Larry</td> 
-  						<td>the Bird</td> 
-  						<td><a class="btn btn-primary btn-sm" href="#" role="button">Join</a></td>
-  				</tr> 
-  			</tbody>	
-  	 </table>
+          </tr> 
+          <tr> 
+            <th scope="row">3</th> 
+              <td>Larry</td> 
+              <td>the Bird</td> 
+              <td><a class="btn btn-primary btn-sm" href="#" role="button">Join</a></td>
+          </tr> 
+        </tbody>  
+     </table>
     </div> <!-- End Panel-->
     </div> <!-- End of column -->
 
@@ -209,40 +209,48 @@
 
 <div class="container-fluid">
 <!-- Modal -->
-		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  		<div class="modal-dialog" role="document">
-    	<div class="modal-content">
-     	
-     	<div class="modal-header">
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+      <div class="modal-content">
+      
+      <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
           </button>
-        	<h2 class="modal-title" id="exampleModalLabel">Create a Music Sharing Group!</h2>
-      	</div>
+          <h2 class="modal-title" id="exampleModalLabel">Create a Music Sharing Group!</h2>
+        </div>
 
       <div class="modal-body">
-     	    <form>
+          <form>
             <div class="form-group">
               <center><label for="Name">Name your Music Queue</label></center>
               <input type="text" class="form-control" id="playlistName" aria-describedby="emailHelp" placeholder="Enter name">
+        <!--Jared's Code-->
+    
+  <script language="JavaScript">
+    function showInput() {
+    var value =  document.getElementById("playlistName").value;   // get value of message
+    localStorage.setItem('val',value); // set value of message in local storage
+}
+  </script>
+
             </div>
           </form>
       </div>
+    
+        <div class="modal-footer" method="post">
+          <button type="button" onclick="showInput();" id="modalSubmit" class="btn btn-primary">Create</button>
+        </div>
 
-      	<div class="modal-footer">
-        	<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        	<button type="submit" id="modalSubmit" class="btn btn-primary">Create</button>
-      	</div>
-
-    	</div>
-  		</div>
-		</div>
+      </div>
+      </div>
+    </div>
   </div>
 </div>
 
     <script src="scripts/JS/modal.js"></script>
     <script src="/service-worker.js"></script>
     <script src="scripts/JS/home.js"></script>
-	  <script src="scripts/JS/bootstrap.min.js"></script>
-	</body>
+    <script src="scripts/JS/bootstrap.min.js"></script>
+  </body>
 </html>
