@@ -8,6 +8,7 @@ var filesToCache = [
   '/scripts/home.js',
   '/scripts/modal.js',
   '/css/bootstrap.css',
+  '/manifest.json'
 ];
 
 

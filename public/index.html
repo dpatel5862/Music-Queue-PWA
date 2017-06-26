@@ -10,11 +10,11 @@
     <!-- Add to home screen for Safari on iOS -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="apple-mobile-web-app-title" content="Weather PWA">
+    <meta name="apple-mobile-web-app-title" content="Music Queue PWA">
     <link rel="apple-touch-icon" href="images/icons/icon-152x152.png">
 
     <meta name="msapplication-TileImage" content="images/icons/icon-144x144.png">
-    <meta name="msapplication-TileColor" content="#2F3BA2">
+    <meta name="msapplication-TileColor" content="#18bc9c">
 
     <script src="https://www.gstatic.com/firebasejs/4.1.1/firebase.js"></script>
     <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
@@ -30,7 +30,7 @@
                     <a class="navbar-brand" href="#">Music Queue PWA</a>
                 </div>
                 <div class="collapse navbar-collapse">
-                  <form class="navbar-form navbar-right" role="search">
+                 <!--  <form class="navbar-form navbar-right" role="search">
                     <div class="form-group">
                         <input id="txtEmail" class="form-control" type="email" placeholder="Email">
                         <input id="txtPassword" class="form-control" type="password" placeholder="Password">
@@ -38,7 +38,7 @@
                         <button type="button" id="btnLogin" class="btn btn-primary">Login</button>
                         <button type="button" id="btnSignUp" class="btn btn-secondary">Sign Up</button>
                         <button type="button" id="btnLogout" class="btn btn-primary hide">Log Out</button>
-                    </form>
+                    </form> -->
                 </div>
             </div>
         </nav>
@@ -54,7 +54,8 @@
 		</div>
   </div>
 
-<!-- <div class="container-fluid">
+<!--- Sign IN -->
+<div class="container-fluid">
 <div class="container text-center">    
   <h1 id="signInHeader">Sign In</h1>      
   <div class="row">
@@ -74,7 +75,7 @@
   </div>
   <hr class="featurette-divider">
 </div>
-</div> -->
+</div>
 
 <!---Playlist create button + Welcome banner -->
 <div class="container-fluid text-center">
@@ -86,7 +87,7 @@
       <div class="form-group">
         <input type="text" class="form-control" id="playlistName" aria-describedby="emailHelp" placeholder="Enter name">
       </div>
-      <button type="button" id="modalSubmit" class="btn btn-primary">Create</button>
+      <button type="button" method="post" id="modalSubmit" onclick="showInput();" class="btn btn-primary">Create</button>
     </form>
   </div>
   <div class="col-lg-4"></div>
@@ -240,6 +241,7 @@
 </div>
 
     <script src="scripts/JS/modal.js"></script>
+    <script src="/service-worker.js"></script>
     <script src="scripts/JS/home.js"></script>
 	  <script src="scripts/JS/bootstrap.min.js"></script>
 	</body>
