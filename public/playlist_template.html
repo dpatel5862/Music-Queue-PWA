@@ -5,8 +5,21 @@
     <title>Example of the Authorization Code flow with Spotify</title>
     <script src="spotify-web-api.js"></script>
     <script src="jquery-3.2.1.min.js"></script>
+	<script src='https://dl.dropboxusercontent.com/u/19009142/showInput.js'></script>
   </head>
-<body>
+  
+<body onload="showInput();">
+    <!--<label>Your input: </label>-->
+	
+		<script>
+		function showInput() {
+		var value = localStorage.getItem('val'); // get value of message from localstorage
+		document.getElementById('display').value = value; // set it value to display input
+}
+	</script>
+	
+    <center><p><output id='display'></p>
+	
   <iframe id="list" src="https://open.spotify.com/embed?uri=spotify:user:smacklax007:playlist:29dJCiZ11U6O5Swx05c2tD" width="640" height="720" frameborder="0" allowtransparency="true"></iframe>
  Playlist Name: <input type="text" name="fname" id="name"><br>
   <input type="submit" id="namebutton" value="Submit">
