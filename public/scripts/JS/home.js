@@ -97,4 +97,8 @@ firebase.auth().onAuthStateChanged(user => {
 
 });
 
+  var database = firebase.database();
+console.log(database.ref());
+
+
 }());
