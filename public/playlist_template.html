@@ -1,13 +1,42 @@
 <!DOCTYPE HTML>
 <html>
-<head>
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
-    <title>Example of the Authorization Code flow with Spotify</title>
+  <head>
+    <title>MQ Playlist</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="CSS/bootstrap.css" rel="stylesheet" />
+    <link rel="manifest" href="/manifest.json">
+
+    <!-- Add to home screen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Music Queue">
+    <link rel="apple-touch-icon" href="images/icons/icon-152x152.png">
+
+    <meta name="msapplication-TileImage" content="images/icons/icon-144x144.png">
+    <meta name="msapplication-TileColor" content="#18bc9c">
+
+    <script src="https://www.gstatic.com/firebasejs/4.1.1/firebase.js"></script>
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
     <script src="spotify-web-api.js"></script>
     <script src="jquery-3.2.1.min.js"></script>
   </head>
   
 <body onload="showInput();">
+
+  <div class="container-fixed">
+<!-- Nav -->
+        <nav class="navbar navbar-inverse navbar-fixed">
+            <div class="container-fixed">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#">Music Queue PWA</a>
+                </div>
+                <div class="collapse navbar-collapse">
+                </div>
+            </div>
+        </nav>
+  </div>
     <!--<label>Your input: </label>-->
 	
 		<script>
