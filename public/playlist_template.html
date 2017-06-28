@@ -39,22 +39,62 @@
   </div>
     <!--<label>Your input: </label>-->
 	
-		<script>
+	<script>
 		function showInput() {
 		var value = localStorage.getItem('val'); // get value of message from localstorage
 		document.getElementById('display').value = value; // set it value to display input
-}
+    }
 	</script>
 	
-    <center><p><output id='display'></p>
 	
-  <iframe id="list" src="https://open.spotify.com/embed?uri=spotify:user:smacklax007:playlist:29dJCiZ11U6O5Swx05c2tD" width="640" height="720" frameborder="0" allowtransparency="true"></iframe>
+<!--   <iframe id="list" src="https://open.spotify.com/embed?uri=spotify:user:smacklax007:playlist:29dJCiZ11U6O5Swx05c2tD" width="640" height="720" frameborder="0" allowtransparency="true"></iframe> -->
+
+<!-- 4:3 aspect ratio -->
+<div class="embed-responsive embed-responsive-4by3">
+  <iframe class="embed-responsive-item" src="https://open.spotify.com/embed?uri=spotify:user:smacklax007:playlist:29dJCiZ11U6O5Swx05c2tD">></iframe>
+</div>
+<hr>
+<div class="container-fluid">
+ <div class="container text-center">    
+  <div class="row">
+    
+    <div class="col-md-6">
+      <div class="panel panel-default">
+      <!-- Default panel contents -->
+        <div class="panel-heading">Authenticate</div>
+        <div class="panel-body"></div>
+          <div id="login">
+            <h3>Please Authenticate with Spotify</h3>
+            <button id="login-button" class="btn-sm btn-primary">Log in with Spotify</button><hr>
+          </div>
+          <div id="loggedin">
+            <div id="user-profile">
+          </div>
+          <div id="oauth">
+          </div>
+        </div>
+      </div>
+    </div>
+
+        <div class="col-md-6">
+      <div class="panel panel-default">
+      <!-- Default panel contents -->
+        <div class="panel-heading">Control System</div>
+        <div class="panel-body"><p>Quick decription about the information and UI below</p></div>
+          <h4><output id='display'></h4>
+      </div>
+    </div>
+ </div>  
+</div> 
+
+
+
  Playlist Name: <input type="text" name="fname" id="name"><br>
   <input type="submit" id="namebutton" value="Submit">
 
-   <div class="container">
+ <!--   <div class="container">
      <div id="login">
-       <h1>This is an example of the Implicit Grant flow</h1>
+       <h1>Please Authenticate with Spotify</h1>
        <button id="login-button" class="btn btn-primary">Log in with Spotify</button>
      </div>
      <div id="loggedin">
@@ -63,7 +103,7 @@
        <div id="oauth">
        </div>
      </div>
-   </div>
+   </div> -->
 
    <script id="user-profile-template" type="text/x-handlebars-template">
      <h1>Logged in as {{display_name}}</h1>
