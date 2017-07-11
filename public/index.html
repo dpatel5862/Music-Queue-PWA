@@ -1,31 +1,31 @@
 <html>
-	<head>
-		<title>Music Queue PWA</title>
+  <head>
+    <title>Music Queue PWA</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<link href="CSS/bootstrap.css" rel="stylesheet" />
+    <link href="CSS/bootstrap.css" rel="stylesheet" />
     <link rel="manifest" href="/manifest.json">
 
     <!-- Add to home screen for Safari on iOS -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="apple-mobile-web-app-title" content="Music Queue PWA">
-    <link rel="apple-touch-icon" href="images/icons/icon-152x152.png">
+    <meta name="apple-mobile-web-app-title" content="Music Queue">
+    <link rel="apple-touch-icon" href="images/icon-152x152.png">
 
-    <meta name="msapplication-TileImage" content="images/icons/icon-144x144.png">
+    <meta name="msapplication-TileImage" content="images/icon-144x144.png">
     <meta name="msapplication-TileColor" content="#18bc9c">
 
     <script src="https://www.gstatic.com/firebasejs/4.1.1/firebase.js"></script>
     <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
-	</head>
+  </head>
 
-	<body>
+  <body>
 
-	<div class="container-fluid">
+  <div class="container-fixed">
 <!-- Nav -->
         <nav class="navbar navbar-inverse navbar-fixed">
-            <div class="container-fluid">
+            <div class="container-fixed">
                 <div class="navbar-header">
                     <a class="navbar-brand" href="#">Music Queue PWA</a>
                 </div>
@@ -44,20 +44,20 @@
         </nav>
   </div>
 
-  <div class="container-fluid">
+  <div class="container-fixed">
 <!-- Jumbotron -->
-		<div class="jumbotron">
-  			<center>
-  			<h1>Music Queue Progressive Web App</h1>
-  			<p>This is where we will explain what our app does, how to join party, create party, and how to add to a playlist.</p>
-  			</center>
-		</div>
+    <div class="jumbotron">
+        <center>
+        <h1>Music Queue Progressive Web App</h1>
+        <p>This is where we will explain what our app does, how to join party, create party, and how to add to a playlist.</p>
+        </center>
+    </div>
   </div>
 
 <!--- Sign IN -->
 <div class="container-fluid">
 <div class="container text-center">    
-  <h1 id="signInHeader">Sign In</h1>      
+  <h3 id="signInHeader">Sign In</h3>      
   <div class="row">
     <div class="col-lg-12">
       <div><center>
@@ -82,12 +82,12 @@
     <div class="col-lg-4"></div>
 
   <div class="col-lg-4">
-    <h1 id="welcomeHeader"></h1><br>
+    <!-- <h4 id="welcomeHeader"></h4><br> -->
     <form class="form-inline">
       <div class="form-group">
-        <input type="text" class="form-control" id="playlistName" aria-describedby="emailHelp" placeholder="Enter name">
+        <textarea type="text" class="form-control" id="playlistName" aria-describedby="emailHelp" placeholder="Enter name"></textarea>
       </div>
-      <button type="button" method="post" id="modalSubmit" onclick="showInput();" class="btn btn-primary">Create</button>
+      <button type="button" id="modalSubmit" onclick="showInput()" class="btn btn-primary">Create</button>
     </form>
   </div>
   <div class="col-lg-4"></div>
@@ -106,38 +106,38 @@
     <p>Quick description on how to join parties</p>
   </div>
  <!-- Table -->
-		<table class="table table-hover" id="joinPartyTable">
-  			<thead> 
-  				<tr> 
-  					<th>#</th> 
-  					<th>Party Name</th> 
-  					<th>Host</th>  
-  					<th>Join</th>
-  				</tr> 
-  			</thead>	
-  			<tbody> 
-  				<tr> 
-  					<th scope="row">1</th> 
-  						<td>Mark</td> 
-  						<td>Otto</td> 
-  						<td><a class="btn btn-primary btn-sm" href="#" role="button">Join</a></td>
+    <table class="table table-hover" id="joinPartyTable">
+        <thead> 
+          <tr> 
+            <th>#</th> 
+            <th>Party Name</th> 
+            <th>Host</th>  
+            <th>Join</th>
+          </tr> 
+        </thead>  
+        <tbody> 
+          <tr> 
+            <th scope="row">1</th> 
+              <td>Mark</td> 
+              <td>Otto</td> 
+              <td><a class="btn btn-primary btn-sm" href="#" role="button">Join</a></td>
 
-  				</tr> 
-  				<tr> 
-  					<th scope="row">2</th> 
-  						<td>Jacob</td> 
-  						<td>Thornton</td> 
-  						<td><a class="btn btn-primary btn-sm" href="#" role="button">Join</a></td>
+          </tr> 
+          <tr> 
+            <th scope="row">2</th> 
+              <td>Jacob</td> 
+              <td>Thornton</td> 
+              <td><a class="btn btn-primary btn-sm" href="#" role="button">Join</a></td>
 
-  				</tr> 
-  				<tr> 
-  					<th scope="row">3</th> 
-  						<td>Larry</td> 
-  						<td>the Bird</td> 
-  						<td><a class="btn btn-primary btn-sm" href="#" role="button">Join</a></td>
-  				</tr> 
-  			</tbody>	
-  	 </table>
+          </tr> 
+          <tr> 
+            <th scope="row">3</th> 
+              <td>Larry</td> 
+              <td>the Bird</td> 
+              <td><a class="btn btn-primary btn-sm" href="#" role="button">Join</a></td>
+          </tr> 
+        </tbody>  
+     </table>
     </div> <!-- End Panel-->
     </div> <!-- End of column -->
 
@@ -190,8 +190,7 @@
 </div>
 </div>
       
-      <hr class="featurette-divider">
-
+<hr class="featurette-divider">
 
  <!-- Footer -->
         <footer class="container-fluid text-center">
@@ -209,40 +208,49 @@
 
 <div class="container-fluid">
 <!-- Modal -->
-		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  		<div class="modal-dialog" role="document">
-    	<div class="modal-content">
-     	
-     	<div class="modal-header">
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+      <div class="modal-content">
+      
+      <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
           </button>
-        	<h2 class="modal-title" id="exampleModalLabel">Create a Music Sharing Group!</h2>
-      	</div>
+          <h2 class="modal-title" id="exampleModalLabel">Create a Music Sharing Group!</h2>
+        </div>
 
       <div class="modal-body">
-     	    <form>
+          <form>
             <div class="form-group">
               <center><label for="Name">Name your Music Queue</label></center>
               <input type="text" class="form-control" id="playlistName" aria-describedby="emailHelp" placeholder="Enter name">
+        <!--Jared's Code-->
+    
+      <script language="JavaScript">
+           function showInput() {
+           var value =  document.getElementById("playlistName").value;   // get value of message
+          localStorage.setItem('val',value); // set value of message in local storage
+          window.location = 'playlist_template.html';
+        } 
+  </script>
+
             </div>
           </form>
       </div>
+    
+      <!--   <div class="modal-footer" method="post">
+          <button type="button" onclick="showInput();" id="modalSubmit" class="btn btn-primary">Create</button>
+        </div> -->
 
-      	<div class="modal-footer">
-        	<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        	<button type="submit" id="modalSubmit" class="btn btn-primary">Create</button>
-      	</div>
-
-    	</div>
-  		</div>
-		</div>
+      </div>
+      </div>
+    </div>
   </div>
 </div>
 
     <script src="scripts/JS/modal.js"></script>
     <script src="/service-worker.js"></script>
     <script src="scripts/JS/home.js"></script>
-	  <script src="scripts/JS/bootstrap.min.js"></script>
-	</body>
+    <script src="scripts/JS/bootstrap.min.js"></script>
+  </body>
 </html>

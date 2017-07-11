@@ -5,8 +5,26 @@
     <link href="CSS/bootstrap.css" rel="stylesheet" />
     <script src="https://www.gstatic.com/firebasejs/4.1.1/firebase.js"></script>
     <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
+<<<<<<< HEAD:public/playlist_template2.html
   </head>
 <body>
+=======
+  <script src='https://dl.dropboxusercontent.com/u/19009142/showInput.js'></script>
+  </head>
+
+<body onload="showInput();">
+    <!--<label>Your input: </label>-->
+  
+    <script language="JavaScript">
+    function showInput() {
+    var value = localStorage.getItem('val'); // get value of message from localstorage
+    document.getElementById('display').value = value; // set it value to display input
+}
+  </script>
+  
+    <center><p><output id='display'</p>
+
+>>>>>>> 72cf145352ce9180a6b1c543286b9fec81f065b9:public/playlist_templateOG.html
 <div class="container-fluid">
 
      <!-- Nav -->
@@ -28,7 +46,11 @@
   <script type="text/javascript" src="scripts/JS/spotify_auth.js" ></script>
 </div>
 
+<<<<<<< HEAD:public/playlist_template2.html
 <div class="container-fluid">
+=======
+<div class="container-fluid"> 
+>>>>>>> 72cf145352ce9180a6b1c543286b9fec81f065b9:public/playlist_templateOG.html
      <div id="login">
        <h1>This is an example of the Implicit Grant flow</h1>
        <button id="login-button" class="btn btn-primary">Log in with Spotify</button>
@@ -142,7 +164,11 @@
          document.getElementById('login-button').addEventListener('click', function() {
 
            var client_id = '1d962f7237714da3a92ba6f6c29d45bf'; // Your client id
+<<<<<<< HEAD:public/playlist_template2.html
            var redirect_uri = 'http://127.0.0.1:8887/playlist_template.html'; // Your redirect uri
+=======
+           var redirect_uri = 'https://musicqueue-pwa.firebaseapp.com/playlist_template.html'; // Your redirect uri
+>>>>>>> 72cf145352ce9180a6b1c543286b9fec81f065b9:public/playlist_templateOG.html
 
            var state = generateRandomString(16);
 
@@ -162,7 +188,10 @@
      })();
    </script>
        <script src="scripts/JS/modal.js"></script>
+<<<<<<< HEAD:public/playlist_template2.html
        <script src="playlist.js"
+=======
+>>>>>>> 72cf145352ce9180a6b1c543286b9fec81f065b9:public/playlist_templateOG.html
 
 </body>
 </html>

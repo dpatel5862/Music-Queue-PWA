@@ -48,7 +48,9 @@
 
  const joinPartyTable = document.getElementById('joinPartyTable');
  const hostedPartyTable = document.getElementById('hostedPartyTable');
-const signInHeader = document.getElementById('signInHeader');
+ const signInHeader = document.getElementById('signInHeader');
+ const playlistName = document.getElementById('playlistName')
+ const modalSubmit = document.getElementById('modalSubmit')
 
 
 //Add realtime listener
@@ -61,9 +63,11 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
     btnSignUp.classList.add('hide');
     txtEmail.classList.add('hide');
     txtPassword.classList.add('hide');
-    signInHeader.classList.add('hide');
+    //signInHeader.classList.add('hide');
     joinPartyTable.classList.remove('hide');
     hostedPartyTable.classList.remove('hide');
+    playlistName.classList.remove('hide');
+    modalSubmit.classList.remove('hide');
 	}
 	else {
 		console.log('not logged in');
@@ -72,10 +76,11 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
     btnSignUp.classList.remove('hide');
     txtEmail.classList.remove('hide');
     txtPassword.classList.remove('hide');
-    signInHeader.classList.remove('hide');
+    //signInHeader.classList.remove('hide');
     joinPartyTable.classList.add('hide');
     hostedPartyTable.classList.add('hide');
-
+    playlistName.classList.add('hide');
+    modalSubmit.classList.add('hide');
 	}
 
 });
@@ -87,18 +92,15 @@ firebase.auth().onAuthStateChanged(user => {
         console.log(user);
         const email = user.email;
         console.log(email);
-        document.getElementById("welcomeHeader").innerHTML = "Welcome " +email;
+        document.getElementById("signInHeader").innerHTML = "Welcome " +email;
 
   }
   else
   {
-        document.getElementById("welcomeHeader").innerHTML = "Welcome";
+        document.getElementById("signInHeader").innerHTML = "Sign In";
   }
 
 });
-
-  var database = firebase.database();
-console.log(database.ref());
 
 
 }());

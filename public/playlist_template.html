@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -17,6 +18,27 @@
 <!--button to add song to playlist-->
 <button type="submit" id="addbutton">Add</button>
 
+=======
+<!DOCTYPE HTML>
+<html>
+<head>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <title>Example of the Authorization Code flow with Spotify</title>
+    <script src="spotify-web-api.js"></script>
+    <script src="jquery-3.2.1.min.js"></script>
+  </head>
+<body>
+  <iframe id="list" src="https://open.spotify.com/embed?uri=spotify:user:smacklax007:playlist:29dJCiZ11U6O5Swx05c2tD" width="640" height="720" frameborder="0" allowtransparency="true"></iframe>
+<!--button to name playlist -->
+<input id="name" type="text" />
+<button type="submit" id="namebutton">Submit</button>
+<!--button to search for song on spotify-->
+<input id="seartext" type="text" />
+<button type="submit" id="searchbutton">search</button>
+<!--button to add song to playlist-->
+<button type="submit" id="addbutton">Add</button>
+
+>>>>>>> 72cf145352ce9180a6b1c543286b9fec81f065b9
    <div class="container">
      <div id="login">
        <h1>This is an example of the Implicit Grant flow</h1>
@@ -124,12 +146,18 @@ console.log(trackuri);//logging to console to ensure proper uri
  document.getElementById('list').src = document.getElementById('list').src;//refreshing iframe after song added, not working alwyas, seems to need 4+tracks before refreshing actaul playlist iframe
  });
   });
+<<<<<<< HEAD
 
 //Below is code from spotify for authentication
      (function() {
 
        var stateKey = 'spotify_auth_state';
 
+=======
+//Below is code from spotify for authentication
+     (function() {
+       var stateKey = 'spotify_auth_state';
+>>>>>>> 72cf145352ce9180a6b1c543286b9fec81f065b9
        /**
         * Obtains parameters from the hash of the URL
         * @return Object
@@ -143,7 +171,10 @@ console.log(trackuri);//logging to console to ensure proper uri
          }
          return hashParams;
        }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 72cf145352ce9180a6b1c543286b9fec81f065b9
        /**
         * Generates a random string containing numbers and letters
         * @param  {number} length The length of the string
@@ -152,31 +183,49 @@ console.log(trackuri);//logging to console to ensure proper uri
        function generateRandomString(length) {
          var text = '';
          var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+<<<<<<< HEAD
 
+=======
+>>>>>>> 72cf145352ce9180a6b1c543286b9fec81f065b9
          for (var i = 0; i < length; i++) {
            text += possible.charAt(Math.floor(Math.random() * possible.length));
          }
          return text;
        };
+<<<<<<< HEAD
 
        var userProfileSource = document.getElementById('user-profile-template').innerHTML,
            userProfileTemplate = Handlebars.compile(userProfileSource),
            userProfilePlaceholder = document.getElementById('user-profile');
 
+=======
+       var userProfileSource = document.getElementById('user-profile-template').innerHTML,
+           userProfileTemplate = Handlebars.compile(userProfileSource),
+           userProfilePlaceholder = document.getElementById('user-profile');
+>>>>>>> 72cf145352ce9180a6b1c543286b9fec81f065b9
            oauthSource = document.getElementById('oauth-template').innerHTML,
            oauthTemplate = Handlebars.compile(oauthSource),
            oauthPlaceholder = document.getElementById('oauth');
        var params = getHashParams();
+<<<<<<< HEAD
 
        var access_token = params.access_token,
            state = params.state,
            storedState = localStorage.getItem(stateKey);
 
+=======
+       var access_token = params.access_token,
+           state = params.state,
+           storedState = localStorage.getItem(stateKey);
+>>>>>>> 72cf145352ce9180a6b1c543286b9fec81f065b9
        if (access_token && (state == null || state !== storedState)) {
          alert('There was an error during the authentication');
        } else {
          localStorage.removeItem(stateKey);
+<<<<<<< HEAD
 
+=======
+>>>>>>> 72cf145352ce9180a6b1c543286b9fec81f065b9
          if (access_token) {
            $.ajax({
                url: 'https://api.spotify.com/v1/me',
@@ -202,7 +251,10 @@ console.log(trackuri);//logging to console to ensure proper uri
                       console.log(meid);//logging to console to ensure spotify id is correct
                       localStorage.setItem('meid',meid);//setting to local storage for use in spotifyapi fucntions
                     });
+<<<<<<< HEAD
 
+=======
+>>>>>>> 72cf145352ce9180a6b1c543286b9fec81f065b9
                     $('#login').hide();
                  $('#loggedin').show();
                }
@@ -213,6 +265,7 @@ console.log(trackuri);//logging to console to ensure proper uri
          }
         //spotify login button, code from spotify
          document.getElementById('login-button').addEventListener('click', function() {
+<<<<<<< HEAD
 
            var client_id = '1d962f7237714da3a92ba6f6c29d45bf'; // Your client id
            var redirect_uri = 'http://127.0.0.1:8887/playlist_template.html'; // Your redirect uri
@@ -222,6 +275,13 @@ console.log(trackuri);//logging to console to ensure proper uri
            localStorage.setItem(stateKey, state);
            var scope = 'playlist-read-private playlist-modify-private user-library-modify user-read-private user-read-email';
 
+=======
+           var client_id = '1d962f7237714da3a92ba6f6c29d45bf'; // Your client id
+           var redirect_uri = 'https://musicqueue-pwa.firebaseapp.com/playlist_template.html'; // Your redirect uri
+           var state = generateRandomString(16);
+           localStorage.setItem(stateKey, state);
+           var scope = 'playlist-read-private playlist-modify-private user-library-modify user-read-private user-read-email';
+>>>>>>> 72cf145352ce9180a6b1c543286b9fec81f065b9
            var url = 'https://accounts.spotify.com/authorize';
            url += '?response_type=token';
            url += '&client_id=' + encodeURIComponent(client_id);
@@ -231,9 +291,16 @@ console.log(trackuri);//logging to console to ensure proper uri
             window.location = url;
          }, false);
                 }
+<<<<<<< HEAD
 
   })();
 
    </script>
   </body>
 </html>
+=======
+  })();
+   </script>
+  </body>
+</html>
+>>>>>>> 72cf145352ce9180a6b1c543286b9fec81f065b9
