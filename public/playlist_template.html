@@ -1,104 +1,26 @@
 <!DOCTYPE HTML>
 <html>
-  <head>
-    <title>MQ Playlist</title>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="CSS/bootstrap.css" rel="stylesheet" />
-    <link rel="manifest" href="/manifest.json">
-
-    <!-- Add to home screen for Safari on iOS -->
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="apple-mobile-web-app-title" content="Music Queue">
-    <link rel="apple-touch-icon" href="images/icons/icon-152x152.png">
-
-    <meta name="msapplication-TileImage" content="images/icons/icon-144x144.png">
-    <meta name="msapplication-TileColor" content="#18bc9c">
-
-    <script src="https://www.gstatic.com/firebasejs/4.1.1/firebase.js"></script>
-    <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
+<head>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <title>Example of the Authorization Code flow with Spotify</title>
     <script src="spotify-web-api.js"></script>
     <script src="jquery-3.2.1.min.js"></script>
   </head>
-  
-<body onload="showInput();">
+<body>
+  <iframe id="list" src="https://open.spotify.com/embed?uri=spotify:user:smacklax007:playlist:29dJCiZ11U6O5Swx05c2tD" width="640" height="720" frameborder="0" allowtransparency="true"></iframe>
+<!--button to name playlist -->
+<input id="name" type="text" />
+<button type="submit" id="namebutton">Submit</button>
+<!--button to search for song on spotify-->
+<input id="seartext" type="text" />
+<button type="submit" id="searchbutton">search</button>
+<!--button to add song to playlist-->
+<button type="submit" id="addbutton">Add</button>
 
-  <div class="container-fixed">
-<!-- Nav -->
-        <nav class="navbar navbar-inverse navbar-fixed">
-            <div class="container-fixed">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="#">Music Queue PWA</a>
-                </div>
-                <div class="collapse navbar-collapse">
-                </div>
-            </div>
-        </nav>
-  </div>
-    <!--<label>Your input: </label>-->
-	
-	<script>
-		function showInput() {
-		var value = localStorage.getItem('val'); // get value of message from localstorage
-		document.getElementById('display').value = value; // set it value to display input
-    }
-	</script>
-	
-	
-<!--   <iframe id="list" src="https://open.spotify.com/embed?uri=spotify:user:smacklax007:playlist:29dJCiZ11U6O5Swx05c2tD" width="640" height="720" frameborder="0" allowtransparency="true"></iframe> -->
-
-<!-- 4:3 aspect ratio -->
-<div class="embed-responsive embed-responsive-4by3">
-  <iframe class="embed-responsive-item" src="https://open.spotify.com/embed?uri=spotify:user:smacklax007:playlist:29dJCiZ11U6O5Swx05c2tD">></iframe>
-</div>
-
-<hr>
-
-<div class="container-fluid">
- <div class="container text-center">    
-  <div class="row">
-    <div class="col-md-6">
-      <div class="panel panel-default">
-      <!-- Default panel contents -->
-        <div class="panel-heading">Authenticate</div>
-        <div class="panel-body"></div>
-          <div id="login">
-            <h3>Please Authenticate with Spotify</h3>
-            <button id="login-button" class="btn-sm btn-primary">Log in with Spotify</button><hr>
-          </div>
-          <div id="loggedin">
-            <div id="user-profile">
-          </div>
-          <div id="oauth">
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-md-6">
-      <div class="panel panel-default">
-      <!-- Default panel contents -->
-        <div class="panel-heading">Control System</div>
-        <div class="panel-body"><p>Quick decription about the information and UI below</p></div>
-          <h4><output id='display'></h4>
-          <h3>Playlist Name:<h3>
-          <input type="text" name="fname" id="name">
-          <input type="submit" id="namebutton" value="Submit">
-      </div>
-    </div>
- </div>  
-</div> 
-
-
-
- Playlist Name: <input type="text" name="fname" id="name"><br>
-  <input type="submit" id="namebutton" value="Submit">
-
- <!--   <div class="container">
+   <div class="container">
      <div id="login">
-       <h1>Please Authenticate with Spotify</h1>
+       <h1>This is an example of the Implicit Grant flow</h1>
+       <!--button to login with Spotify -->
        <button id="login-button" class="btn btn-primary">Log in with Spotify</button>
      </div>
      <div id="loggedin">
@@ -107,8 +29,8 @@
        <div id="oauth">
        </div>
      </div>
-   </div> -->
-
+   </div>
+<!--Handlebars for area to fill in when login is successful -->
    <script id="user-profile-template" type="text/x-handlebars-template">
      <h1>Logged in as {{display_name}}</h1>
      <div class="media">
@@ -128,7 +50,7 @@
        </div>
      </div>
    </script>
-
+<!--runs oauth-template handlebar, and pulls access token-->
    <script id="oauth-template" type="text/x-handlebars-template"/>
      <h2>oAuth info</h2>
      <dl class="dl-horizontal">
@@ -139,10 +61,72 @@
    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0-alpha.1/handlebars.min.js"></script>
 
    <script>
+   var globalid;//id for playlist name for playlist creation
+   var playid;//id for playlist name for change of iframe src
+   var meid;//id for user
+   var trackname;//name for searching track
+   var trackj={"id":'if'};//Json array for use in track search/adding to playlist
+   access_token=localStorage.getItem("accesstoken");//pulls access token from localStorage for autherization
+   var spotifyApi = new SpotifyWebApi();//setting the Spotify API to be used
+   spotifyApi.setAccessToken(access_token)//setting access token for API
+   //button for naming and creating new playlist
+   document.getElementById('namebutton').addEventListener('click', function() {
+ globalid=document.getElementById('name').value;//setting globalid to be value entered into text field
+ console.log(globalid);//logging globalid for testing and validation
+ /* localStorage.setItem('globalid', globalid);//storing globalid locally for future use
+ globalid=localStorage.getItem('globalid');//was using to pull global id when in seperate function. now unneccesary for creation but will keep for now
+console.log(globalid);*/
+ myid=localStorage.getItem('meid');//pulling meid from local storage, created when logging in to spotify
+ console.log(myid);//logging to be able to ensure myid is correct
+//creating a json array to be used for creating the playlist
+ var jsonData = {
+   "name":globalid ,
+   "public": false,
+   "collaborative": true
+ }
+ //spotifyApi is creating playlist with myid and data from jsonData
+spotifyApi.createPlaylist(myid,jsonData)
+.then(function(data) {
+console.log('Playlist Created', data);//logging data sent back from Spotify
+console.log('playlistid', data["id"]);//ensuring id is pulled
+jsonData=data;//transferring data from spotify into local jsonData to be manipulated
+console.log(jsonData);//loggin to console to ensure data transferred to jsonData
+ playid=jsonData["id"];//setting playid to id of playlist pulled from jsonData
+console.log(playid);//loggin to console to ensure id set as expected
+//changing src of iframe to newly created playlist using myid and playid
+document.getElementById('list').src = "https://open.spotify.com/embed?uri=spotify:user:"+myid+":playlist:"+playid
+}, function(err) {
+console.error(err);//error report to console if failed
+});
+ });
+ //search button, passes value enetered to spotifyApi and reports back with jsonData to be utilized in adding a song
+ document.getElementById('searchbutton').addEventListener('click', function() {
+   trackname=document.getElementById('seartext').value;//setting trackname to text in field
+   //spotifyApi is searching for tracks matching name value entered, with current limit of 5 tracks returned
+ spotifyApi.searchTracks(trackname,{limit: 5}).then(function(data) {
+   console.log('Found', data);//logging data from spotifyApi to console to ensure data was returend properly
+   trackj=data;//setting trakj to data for json manipulation
+console.log('trackj',trackj);//loggin trackj to console to ensure proper transfer of data
+var trackuri = trackj.tracks.items[0].uri;//creating a setting trackuri variable to the uri of the first track in the array of found tracks
+ localStorage.setItem('trackuri', trackuri);//setting local storage for trackuri to be used for adding song
+console.log(trackuri);//logging to console to ensure proper uri
+ }, function(err) {
+   console.error(err);//error report to console if failed
+ });
+  });
+  //button to add song to playlist, then refresh
+ document.getElementById('addbutton').addEventListener('click', function() {
+ trackuri=localStorage.getItem('trackuri');//pulling trackuri from localstorage
+  var uris=[trackuri];//create an array with the trackuri stored within
+  //adding track to playlist using myid, playid, and uris to fill function
+ spotifyApi.addTracksToPlaylist(myid,playid,uris).then(function(data) {
+   console.log('Added', data);//logging data returend from spotify to console
+ document.getElementById('list').src = document.getElementById('list').src;//refreshing iframe after song added, not working alwyas, seems to need 4+tracks before refreshing actaul playlist iframe
+ });
+  });
+//Below is code from spotify for authentication
      (function() {
-
        var stateKey = 'spotify_auth_state';
-
        /**
         * Obtains parameters from the hash of the URL
         * @return Object
@@ -156,7 +140,6 @@
          }
          return hashParams;
        }
-
        /**
         * Generates a random string containing numbers and letters
         * @param  {number} length The length of the string
@@ -165,26 +148,21 @@
        function generateRandomString(length) {
          var text = '';
          var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-
          for (var i = 0; i < length; i++) {
            text += possible.charAt(Math.floor(Math.random() * possible.length));
          }
          return text;
        };
-
        var userProfileSource = document.getElementById('user-profile-template').innerHTML,
            userProfileTemplate = Handlebars.compile(userProfileSource),
            userProfilePlaceholder = document.getElementById('user-profile');
-
            oauthSource = document.getElementById('oauth-template').innerHTML,
            oauthTemplate = Handlebars.compile(oauthSource),
            oauthPlaceholder = document.getElementById('oauth');
        var params = getHashParams();
-
        var access_token = params.access_token,
            state = params.state,
            storedState = localStorage.getItem(stateKey);
-
        if (access_token && (state == null || state !== storedState)) {
          alert('There was an error during the authentication');
        } else {
@@ -197,24 +175,23 @@
                },
                             success: function(response) {
                     userProfilePlaceholder.innerHTML = userProfileTemplate(response);
-                    var spotifyApi = new SpotifyWebApi();
-                    var playlistName='testaddname';
-                    var jsonData = {
-                      "name":playlistName ,
-                      "public": false }
-                   spotifyApi.setAccessToken(access_token);
-                   spotifyApi.createPlaylist('smacklax007',jsonData)
-                   .then(function(data) {
-                     console.log('Playlist Created', data);
-                   }, function(err) {
-                     console.error(err);
-                   });
-                   spotifyApi.getUserPlaylists()  // note that we don't pass a user id
-                     .then(function(data) {
-                       console.log('User playlists', data);
-                     }, function(err) {
-                       console.error(err);
-                     });
+                    localStorage.setItem("accesstoken",access_token);//setting access_token to local storage for use in spotifyApi related functions
+                    var spotifyApi = new SpotifyWebApi();//initalizing API for use in getMe function
+                    spotifyApi.setAccessToken(access_token)//setting access token for spotifyApi
+                    //creating a json for getMe funciton
+                    var getmedata={
+                      url:'https://api.spotify.com/v1/me'
+                    }
+                    //using spotifyApi getme function to get id for use in spotfiyApi functions
+                    spotifyApi.getMe(getmedata).then(function(data) {
+                      console.log('me', data);//loggin data of getMe function
+                      console.log('userid', data["id"]);//pulling id from spotif data
+                      getmedata=data;//setting getmedata to data for json manipulation
+                      console.log(getmedata);//logging to console to ensure json transfetred properly
+                       meid=getmedata["id"];//setting meid to id from spotify getMe
+                      console.log(meid);//logging to console to ensure spotify id is correct
+                      localStorage.setItem('meid',meid);//setting to local storage for use in spotifyapi fucntions
+                    });
                     $('#login').hide();
                  $('#loggedin').show();
                }
@@ -223,17 +200,13 @@
              $('#login').show();
              $('#loggedin').hide();
          }
-
+        //spotify login button, code from spotify
          document.getElementById('login-button').addEventListener('click', function() {
-
            var client_id = '1d962f7237714da3a92ba6f6c29d45bf'; // Your client id
            var redirect_uri = 'https://musicqueue-pwa.firebaseapp.com/playlist_template.html'; // Your redirect uri
-
            var state = generateRandomString(16);
-
            localStorage.setItem(stateKey, state);
            var scope = 'playlist-read-private playlist-modify-private user-library-modify user-read-private user-read-email';
-
            var url = 'https://accounts.spotify.com/authorize';
            url += '?response_type=token';
            url += '&client_id=' + encodeURIComponent(client_id);
@@ -243,9 +216,7 @@
             window.location = url;
          }, false);
                 }
-
   })();
-
    </script>
   </body>
 </html>
