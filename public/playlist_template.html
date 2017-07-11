@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -19,6 +20,8 @@
 <button type="submit" id="addbutton">Add</button>
 
 =======
+=======
+>>>>>>> 72cf145352ce9180a6b1c543286b9fec81f065b9
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -38,6 +41,9 @@
 <!--button to add song to playlist-->
 <button type="submit" id="addbutton">Add</button>
 
+<<<<<<< HEAD
+>>>>>>> 72cf145352ce9180a6b1c543286b9fec81f065b9
+=======
 >>>>>>> 72cf145352ce9180a6b1c543286b9fec81f065b9
    <div class="container">
      <div id="login">
@@ -147,12 +153,18 @@ console.log(trackuri);//logging to console to ensure proper uri
  });
   });
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 //Below is code from spotify for authentication
      (function() {
 
        var stateKey = 'spotify_auth_state';
 
+=======
+//Below is code from spotify for authentication
+     (function() {
+       var stateKey = 'spotify_auth_state';
+>>>>>>> 72cf145352ce9180a6b1c543286b9fec81f065b9
 =======
 //Below is code from spotify for authentication
      (function() {
@@ -172,7 +184,10 @@ console.log(trackuri);//logging to console to ensure proper uri
          return hashParams;
        }
 <<<<<<< HEAD
+<<<<<<< HEAD
 
+=======
+>>>>>>> 72cf145352ce9180a6b1c543286b9fec81f065b9
 =======
 >>>>>>> 72cf145352ce9180a6b1c543286b9fec81f065b9
        /**
@@ -184,7 +199,10 @@ console.log(trackuri);//logging to console to ensure proper uri
          var text = '';
          var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 <<<<<<< HEAD
+<<<<<<< HEAD
 
+=======
+>>>>>>> 72cf145352ce9180a6b1c543286b9fec81f065b9
 =======
 >>>>>>> 72cf145352ce9180a6b1c543286b9fec81f065b9
          for (var i = 0; i < length; i++) {
@@ -193,11 +211,17 @@ console.log(trackuri);//logging to console to ensure proper uri
          return text;
        };
 <<<<<<< HEAD
+<<<<<<< HEAD
 
        var userProfileSource = document.getElementById('user-profile-template').innerHTML,
            userProfileTemplate = Handlebars.compile(userProfileSource),
            userProfilePlaceholder = document.getElementById('user-profile');
 
+=======
+       var userProfileSource = document.getElementById('user-profile-template').innerHTML,
+           userProfileTemplate = Handlebars.compile(userProfileSource),
+           userProfilePlaceholder = document.getElementById('user-profile');
+>>>>>>> 72cf145352ce9180a6b1c543286b9fec81f065b9
 =======
        var userProfileSource = document.getElementById('user-profile-template').innerHTML,
            userProfileTemplate = Handlebars.compile(userProfileSource),
@@ -208,6 +232,7 @@ console.log(trackuri);//logging to console to ensure proper uri
            oauthPlaceholder = document.getElementById('oauth');
        var params = getHashParams();
 <<<<<<< HEAD
+<<<<<<< HEAD
 
        var access_token = params.access_token,
            state = params.state,
@@ -218,12 +243,20 @@ console.log(trackuri);//logging to console to ensure proper uri
            state = params.state,
            storedState = localStorage.getItem(stateKey);
 >>>>>>> 72cf145352ce9180a6b1c543286b9fec81f065b9
+=======
+       var access_token = params.access_token,
+           state = params.state,
+           storedState = localStorage.getItem(stateKey);
+>>>>>>> 72cf145352ce9180a6b1c543286b9fec81f065b9
        if (access_token && (state == null || state !== storedState)) {
          alert('There was an error during the authentication');
        } else {
          localStorage.removeItem(stateKey);
 <<<<<<< HEAD
+<<<<<<< HEAD
 
+=======
+>>>>>>> 72cf145352ce9180a6b1c543286b9fec81f065b9
 =======
 >>>>>>> 72cf145352ce9180a6b1c543286b9fec81f065b9
          if (access_token) {
@@ -252,7 +285,10 @@ console.log(trackuri);//logging to console to ensure proper uri
                       localStorage.setItem('meid',meid);//setting to local storage for use in spotifyapi fucntions
                     });
 <<<<<<< HEAD
+<<<<<<< HEAD
 
+=======
+>>>>>>> 72cf145352ce9180a6b1c543286b9fec81f065b9
 =======
 >>>>>>> 72cf145352ce9180a6b1c543286b9fec81f065b9
                     $('#login').hide();
@@ -266,6 +302,7 @@ console.log(trackuri);//logging to console to ensure proper uri
         //spotify login button, code from spotify
          document.getElementById('login-button').addEventListener('click', function() {
 <<<<<<< HEAD
+<<<<<<< HEAD
 
            var client_id = '1d962f7237714da3a92ba6f6c29d45bf'; // Your client id
            var redirect_uri = 'http://127.0.0.1:8887/playlist_template.html'; // Your redirect uri
@@ -276,11 +313,16 @@ console.log(trackuri);//logging to console to ensure proper uri
            var scope = 'playlist-read-private playlist-modify-private user-library-modify user-read-private user-read-email';
 
 =======
+=======
+>>>>>>> 72cf145352ce9180a6b1c543286b9fec81f065b9
            var client_id = '1d962f7237714da3a92ba6f6c29d45bf'; // Your client id
            var redirect_uri = 'https://musicqueue-pwa.firebaseapp.com/playlist_template.html'; // Your redirect uri
            var state = generateRandomString(16);
            localStorage.setItem(stateKey, state);
            var scope = 'playlist-read-private playlist-modify-private user-library-modify user-read-private user-read-email';
+<<<<<<< HEAD
+>>>>>>> 72cf145352ce9180a6b1c543286b9fec81f065b9
+=======
 >>>>>>> 72cf145352ce9180a6b1c543286b9fec81f065b9
            var url = 'https://accounts.spotify.com/authorize';
            url += '?response_type=token';
@@ -292,12 +334,19 @@ console.log(trackuri);//logging to console to ensure proper uri
          }, false);
                 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 
   })();
 
    </script>
   </body>
 </html>
+=======
+  })();
+   </script>
+  </body>
+</html>
+>>>>>>> 72cf145352ce9180a6b1c543286b9fec81f065b9
 =======
   })();
    </script>
