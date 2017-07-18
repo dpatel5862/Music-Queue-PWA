@@ -15,7 +15,9 @@
 <input id="seartext" type="text" />
 <button type="submit" id="searchbutton">search</button>
 <!--button to add song to playlist-->
-<button type="submit" id="addbutton">Add</button>
+<div id="container2">
+    <button id="button1">add</button>
+</div>
    <div class="container">
      <div id="login">
        <h1>This is an example of the Implicit Grant flow</h1>
@@ -62,6 +64,11 @@
       var playid;//id for playlist name for change of iframe src
       var meid;//id for user
       var trackname;//name for searching track
+      //creating a div for the select to be place din
+      var div = document.querySelector("#container2"),
+          frag = document.createDocumentFragment(),//creating a fragment to store select in
+          select = document.createElement("select");//create select element inside div
+          select.id="selections"//setting id of select to allow for manipulation
       var trackj={"id":'if'};//Json array for use in track search/adding to playlist
       access_token=localStorage.getItem("accesstoken");//pulls access token from localStorage for autherization
       var spotifyApi = new SpotifyWebApi();//setting the Spotify API to be used
@@ -104,26 +111,73 @@
       console.log('Found', data);//logging data from spotifyApi to console to ensure data was returend properly
       trackj=data;//setting trakj to data for json manipulation
    console.log('trackj',trackj);//loggin trackj to console to ensure proper transfer of data
-   var trackuri = trackj.tracks.items[0].uri;//creating a setting trackuri variable to the uri of the first track in the array of found tracks
-    localStorage.setItem('trackuri', trackuri);//setting local storage for trackuri to be used for adding song
-   console.log(trackuri);//logging to console to ensure proper uri
+   var trackuri = trackj.tracks.items[0].uri;//pulls track uri out of JSON
+   var trackuri1 = trackj.tracks.items[1].uri;//pulls track uri out of JSON
+   var trackuri2 = trackj.tracks.items[2].uri;//pulls track uri out of JSON
+   var trackuri3 = trackj.tracks.items[3].uri;//pulls track uri out of JSON
+   var trackuri4 = trackj.tracks.items[4].uri;//pulls track uri out of JSON
+   var trackname = trackj.tracks.items[0].name;//pulls track name out of JSON
+   var trackname1 = trackj.tracks.items[1].name;//pulls track name out of JSON
+   var trackname2 = trackj.tracks.items[2].name;//pulls track name out of JSON
+   var trackname3 = trackj.tracks.items[3].name;//pulls track name out of JSON
+   var trackname4 = trackj.tracks.items[4].name;//pulls track name out of JSON
+   var trackartist = trackj.tracks.items[0].artists[0].name;//pulls track artist out of JSON
+   var trackartist1 = trackj.tracks.items[1].artists[0].name;//pulls track artist out of JSON
+   var trackartist2 = trackj.tracks.items[2].artists[0].name;//pulls track artist out of JSON
+   var trackartist3 = trackj.tracks.items[3].artists[0].name;//pulls track artist out of JSON
+   var trackartist4 = trackj.tracks.items[4].artists[0].name;//pulls track artist out of JSON
+   //creating a setting trackuri variable to the uri of the first track in the array of found tracks
+    localStorage.setItem('trackuri', trackuri);//storing uri for use
+    localStorage.setItem('trackuri1', trackuri1);//storing uri for use
+    localStorage.setItem('trackuri2', trackuri2);//storing uri for use
+    localStorage.setItem('trackuri3', trackuri3);//storing uri for use
+    localStorage.setItem('trackuri4', trackuri4);//setting local storage for trackuri to be used for adding song
+   console.log(trackuri);
+   console.log(trackuri1);
+   console.log(trackuri2);
+   console.log(trackuri3);
+   console.log(trackuri4);
+   console.log(trackname);
+   console.log(trackname1);
+   console.log(trackname2);
+   console.log(trackname3);
+   console.log(trackname4);
+   console.log('Artist', trackartist);
+   console.log('Artist', trackartist1);
+   console.log('Artist',trackartist2);
+   console.log('Artist',trackartist3);
+    console.log('Artist',trackartist4);//logging to console to ensure proper uri
+
+   select.options.add( new Option(trackname  +" "+ trackartist, trackuri) );//setting option in selectbox with songname and artist as text and trackuri as value
+   select.options.add( new Option(trackname1 +" "+ trackartist1, trackuri1) );
+   select.options.add( new Option(trackname2 +" "+ trackartist2, trackuri2) );
+   select.options.add( new Option(trackname3 +" "+ trackartist3, trackuri3) );
+   select.options.add( new Option(trackname4 +" "+ trackartist4, trackuri4) );
+   frag.appendChild(select);//appending the select
+   div.appendChild(frag);//appending the frag in the div containing select
+
     }, function(err) {
       console.error(err);//error report to console if failed
     });
      });
-     //button to add song to playlist, then refresh
-    document.getElementById('addbutton').addEventListener('click', function() {
-    trackuri=localStorage.getItem('trackuri');//pulling trackuri from localstorage
-     var uris=[trackuri];//create an array with the trackuri stored within
+       document.getElementById('button1').addEventListener('click', function() {
+         var trackuris = document.getElementById("selections").value;
+         console.log(trackuris)
+    //trackuri=localStorage.getItem('trackuri');//pulling trackuri from localstorage
+     var uris=[trackuris];//create an array with the trackuri stored within
      //adding track to playlist using myid, playid, and uris to fill function
     spotifyApi.addTracksToPlaylist(myid,playid,uris).then(function(data) {
       console.log('Added', data);//logging data returend from spotify to console
-    document.getElementById('list').src = document.getElementById('list').src;//refreshing iframe after song added, not working alwyas, seems to need 4+tracks before refreshing actaul playlist iframe
+    document.getElementById('list').src = document.getElementById('list').src;
+    //refreshing iframe after song added, not working alwyas, seems to need 4+tracks before refreshing actaul playlist iframe
+    var select = document.getElementById("selections");
+    $('#selections').empty();//deletes previos entries upon adding song to playlist
     });
      });
+
 </script>
 
-<script>
+  <script>
 //Below is code from spotify for authentication
      (function() {
 
@@ -199,6 +253,9 @@
                       console.log(meid);//logging to console to ensure spotify id is correct
                       localStorage.setItem('meid',meid);//setting to local storage for use in spotifyapi fucntions
                     });
+                    spotifyApi.getUserPlaylists().then(function(data) {
+                        console.log(data);
+                      });
                     $('#login').hide();
                  $('#loggedin').show();
                }
@@ -214,7 +271,7 @@
 
 
            var client_id = '1d962f7237714da3a92ba6f6c29d45bf'; // Your client id
-           var redirect_uri = 'http://127.0.0.1:8887/playlist_template.html'; // Your redirect uri
+           var redirect_uri = 'https://musicqueue-pwa.firebaseapp.com/playlist_template.html'; // Your redirect uri
            var state = generateRandomString(16);
            localStorage.setItem(stateKey, state);
            var scope = 'playlist-read-private playlist-modify-private user-library-modify user-read-private user-read-email';
