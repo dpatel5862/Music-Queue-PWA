@@ -49,8 +49,12 @@
  const joinPartyTable = document.getElementById('joinPartyTable');
  const hostedPartyTable = document.getElementById('hostedPartyTable');
  const signInHeader = document.getElementById('signInHeader');
- const playlistName = document.getElementById('playlistName')
- const modalSubmit = document.getElementById('modalSubmit')
+ const name = document.getElementById('name');
+ const namebutton = document.getElementById('namebutton');
+ const login = document.getElementById('login');
+ const spotifyHeader = document.getElementById('spotifyHeader');
+ const createHeader = document.getElementById('createHeader');
+
 
 
 //Add realtime listener
@@ -66,8 +70,13 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
     //signInHeader.classList.add('hide');
     joinPartyTable.classList.remove('hide');
     hostedPartyTable.classList.remove('hide');
-    playlistName.classList.remove('hide');
-    modalSubmit.classList.remove('hide');
+    document.getElementById("intialLogin").className = "col-lg-6";
+    name.classList.remove('hide');
+    namebutton.classList.remove('hide');
+    login.classList.remove('hide');
+    spotifyHeader.classList.remove('hide');
+    createHeader.classList.remove('hide');
+
 	}
 	else {
 		console.log('not logged in');
@@ -79,8 +88,12 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
     //signInHeader.classList.remove('hide');
     joinPartyTable.classList.add('hide');
     hostedPartyTable.classList.add('hide');
-    playlistName.classList.add('hide');
-    modalSubmit.classList.add('hide');
+    document.getElementById("intialLogin").className = "col-lg-12";
+    name.classList.add('hide');
+    namebutton.classList.add('hide');
+    login.classList.add('hide');
+    spotifyHeader.classList.add('hide');
+    createHeader.classList.add('hide');
 	}
 
 });
@@ -94,13 +107,55 @@ firebase.auth().onAuthStateChanged(user => {
         console.log(email);
         document.getElementById("signInHeader").innerHTML = "Welcome " +email;
 
+        firebase.database().ref('playlists').on("value", function(snapshot) {
+           //console.log(snapshot.val());
+           var playlists = snapshot.val();
+           var keys = Object.keys(playlists);
+           console.log(keys);
+           for (var i=0; i < keys.length; i++){
+            var k = keys[i];
+            var Name = playlists[k].Name;
+            var URI = playlists[k].URI;
+            var SpotifyID = playlists[k].SpotifyID;
+            //console.log(Name, URI);
+            document.body.appendChild(playlistsList);
+            var li = document.createElement('li');
+            //var anchor = document.createElement('a')
+            li.innerText = (Name + ": " + URI + ": " + SpotifyID)
+            //anchor.setAttribute('href', "https://open.spotify.com/embed?uri=spotify:user:"+SpotifyID+":playlist:"+URI)
+            localStorage.setItem("URI", URI)
+            localStorage.setItem("SpotifyID", SpotifyID)
+            var button = document.createElement("button"); 
+            button.innerHTML = "Join"; 
+            li.appendChild(button); 
+            button.setAttribute("id","joinButton");
+            button.onclick=function(){
+              window.location='playlist_template.html'; 
+              document.getElementById('list').src = "https://open.spotify.com/embed?uri=spotify:user:"+SpotifyID+":playlist:"+URI 
+            }
+            playlistsList = document.getElementById('playlistsList');
+            playlistsList.appendChild(li);
+            //anchor.appendChild(li);
+            // var ul = document.getElementById("list"); 
+            // var li = document.createElement("li"); 
+            // li.appendChild(document.createTextNode("Four")); 
+            // var button = document.createElement("button"); 
+            // button.innerHTML = "asdasd"; 
+            // li.appendChild(button); 
+            // li.setAttribute("id","element4"); 
+            // ul.appendChild(li); alert(li.id);
+           }
+        }, 
+        function (error) {
+           console.log("Error: " + error.code);
+        });
   }
   else
   {
-        document.getElementById("signInHeader").innerHTML = "Sign In";
+        document.getElementById("signInHeader").innerHTML = "Sign In/Sign Up";
   }
 
 });
 
-
 }());
+

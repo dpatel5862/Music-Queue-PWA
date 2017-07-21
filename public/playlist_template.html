@@ -5,9 +5,17 @@
     <title>Example of the Authorization Code flow with Spotify</title>
     <script src="spotify-web-api.js"></script>
     <script src="jquery-3.2.1.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.1.1/firebase.js"></script>
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
   </head>
 <body>
-  <iframe id="list" src="https://open.spotify.com/embed?uri=spotify:user:smacklax007:playlist:29dJCiZ11U6O5Swx05c2tD" width="640" height="720" frameborder="0" allowtransparency="true"></iframe>
+ <iframe id="list" src="https://open.spotify.com/user/smacklax007/playlist/7KhRtEOXf2MxGL5FXbK0dp" width="640" height="720" frameborder="0" allowtransparency="true"></iframe>
+<script>
+myid=localStorage.getItem('SpotifyID');
+console.log(myid);
+playid=localStorage.getItem('URI')
+console.log(playid);
+document.getElementById('list').src = "https://open.spotify.com/embed?uri=spotify:user:"+myid+":playlist:"+playid</script>
 <!--button to name playlist -->
 <input id="name" type="text" />
 <button type="submit" id="namebutton">Submit</button>
@@ -15,208 +23,123 @@
 <input id="seartext" type="text" />
 <button type="submit" id="searchbutton">search</button>
 <!--button to add song to playlist-->
-<button type="submit" id="addbutton">Add</button>
-
-   <div class="container">
-     <div id="login">
-       <h1>This is an example of the Implicit Grant flow</h1>
-       <!--button to login with Spotify -->
-       <button id="login-button" class="btn btn-primary">Log in with Spotify</button>
-     </div>
-     <div id="loggedin">
-       <div id="user-profile">
-       </div>
-       <div id="oauth">
-       </div>
-     </div>
-   </div>
-<!--Handlebars for area to fill in when login is successful -->
-   <script id="user-profile-template" type="text/x-handlebars-template">
-     <h1>Logged in as {{display_name}}</h1>
-     <div class="media">
-       <div class="pull-left">
-         <img class="media-object" width="150" src="{{images.0.url}}" />
-       </div>
-       <div class="media-body">
-         <dl class="dl-horizontal">
-           <dt>Display name</dt><dd class="clearfix">{{display_name}}</dd>
-           <dt>Id</dt><dd>{{id}}</dd>
-           <dt>Email</dt><dd>{{email}}</dd>
-           <dt>Spotify URI</dt><dd><a href="{{external_urls.spotify}}">{{external_urls.spotify}}</a></dd>
-           <dt>Link</dt><dd><a href="{{href}}">{{href}}</a></dd>
-           <dt>Profile Image</dt><dd class="clearfix"><a href="{{images.0.url}}">{{images.0.url}}</a></dd>
-           <dt>Country</dt><dd>{{country}}</dd>
-         </dl>
-       </div>
-     </div>
-   </script>
-<!--runs oauth-template handlebar, and pulls access token-->
-   <script id="oauth-template" type="text/x-handlebars-template"/>
-     <h2>oAuth info</h2>
-     <dl class="dl-horizontal">
-       <dt>Access token</dt><dd class="text-overflow">{{access_token}}</dd>
-     </dl>
-   </script>
-
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0-alpha.1/handlebars.min.js"></script>
-
-   <script>
-   var globalid;//id for playlist name for playlist creation
-   var playid;//id for playlist name for change of iframe src
-   var meid;//id for user
-   var trackname;//name for searching track
-   var trackj={"id":'if'};//Json array for use in track search/adding to playlist
-   access_token=localStorage.getItem("accesstoken");//pulls access token from localStorage for autherization
-   var spotifyApi = new SpotifyWebApi();//setting the Spotify API to be used
-   spotifyApi.setAccessToken(access_token)//setting access token for API
-   //button for naming and creating new playlist
-   document.getElementById('namebutton').addEventListener('click', function() {
- globalid=document.getElementById('name').value;//setting globalid to be value entered into text field
- console.log(globalid);//logging globalid for testing and validation
- /* localStorage.setItem('globalid', globalid);//storing globalid locally for future use
- globalid=localStorage.getItem('globalid');//was using to pull global id when in seperate function. now unneccesary for creation but will keep for now
-console.log(globalid);*/
- myid=localStorage.getItem('meid');//pulling meid from local storage, created when logging in to spotify
- console.log(myid);//logging to be able to ensure myid is correct
-//creating a json array to be used for creating the playlist
- var jsonData = {
-   "name":globalid ,
-   "public": false,
-   "collaborative": true
- }
- //spotifyApi is creating playlist with myid and data from jsonData
-spotifyApi.createPlaylist(myid,jsonData)
-.then(function(data) {
-console.log('Playlist Created', data);//logging data sent back from Spotify
-console.log('playlistid', data["id"]);//ensuring id is pulled
-jsonData=data;//transferring data from spotify into local jsonData to be manipulated
-console.log(jsonData);//loggin to console to ensure data transferred to jsonData
- playid=jsonData["id"];//setting playid to id of playlist pulled from jsonData
-console.log(playid);//loggin to console to ensure id set as expected
-//changing src of iframe to newly created playlist using myid and playid
-document.getElementById('list').src = "https://open.spotify.com/embed?uri=spotify:user:"+myid+":playlist:"+playid
-}, function(err) {
-console.error(err);//error report to console if failed
-});
- });
- //search button, passes value enetered to spotifyApi and reports back with jsonData to be utilized in adding a song
- document.getElementById('searchbutton').addEventListener('click', function() {
-   trackname=document.getElementById('seartext').value;//setting trackname to text in field
-   //spotifyApi is searching for tracks matching name value entered, with current limit of 5 tracks returned
- spotifyApi.searchTracks(trackname,{limit: 5}).then(function(data) {
-   console.log('Found', data);//logging data from spotifyApi to console to ensure data was returend properly
-   trackj=data;//setting trakj to data for json manipulation
-console.log('trackj',trackj);//loggin trackj to console to ensure proper transfer of data
-var trackuri = trackj.tracks.items[0].uri;//creating a setting trackuri variable to the uri of the first track in the array of found tracks
- localStorage.setItem('trackuri', trackuri);//setting local storage for trackuri to be used for adding song
-console.log(trackuri);//logging to console to ensure proper uri
- }, function(err) {
+<div id="container2">
+    <button id="button1">add</button>
+</div>
+   <script>   var globalid;//id for playlist name for playlist creation
+      var playid;//id for playlist name for change of iframe src
+      var meid;//id for user
+      var trackname;//name for searching track
+      //creating a div for the select to be place din
+      var div = document.querySelector("#container2"),
+          frag = document.createDocumentFragment(),//creating a fragment to store select in
+          select = document.createElement("select");//create select element inside div
+          select.id="selections"//setting id of select to allow for manipulation
+      var trackj={"id":'if'};//Json array for use in track search/adding to playlist
+      access_token=localStorage.getItem("accesstoken");//pulls access token from localStorage for autherization
+      var spotifyApi = new SpotifyWebApi();//setting the Spotify API to be used
+      spotifyApi.setAccessToken(access_token)//setting access token for API
+      //button for naming and creating new playlist
+      document.getElementById('namebutton').addEventListener('click', function() {
+    globalid=document.getElementById('name').value;//setting globalid to be value entered into text field
+    console.log(globalid);//logging globalid for testing and validation
+    /* localStorage.setItem('globalid', globalid);//storing globalid locally for future use
+    globalid=localStorage.getItem('globalid');//was using to pull global id when in seperate function. now unneccesary for creation but will keep for now
+   console.log(globalid);*/
+    myid=localStorage.getItem('meid');//pulling meid from local storage, created when logging in to spotify
+    console.log(myid);//logging to be able to ensure myid is correct
+   //creating a json array to be used for creating the playlist
+    var jsonData = {
+      "name":globalid ,
+      "public": false,
+      "collaborative": true
+    }
+    //spotifyApi is creating playlist with myid and data from jsonData
+   spotifyApi.createPlaylist(myid,jsonData)
+   .then(function(data) {
+   console.log('Playlist Created', data);//logging data sent back from Spotify
+   console.log('playlistid', data["id"]);//ensuring id is pulled
+   jsonData=data;//transferring data from spotify into local jsonData to be manipulated
+   console.log(jsonData);//loggin to console to ensure data transferred to jsonData
+    playid=jsonData["id"];
+    localStorage.setItem('playlistid',playid);//setting playid to id of playlist pulled from jsonData
+   console.log(playid);//loggin to console to ensure id set as expected
+   //changing src of iframe to newly created playlist using myid and playid
+   document.getElementById('list').src = "https://open.spotify.com/embed?uri=spotify:user:"+myid+":playlist:"+playid
+   }, function(err) {
    console.error(err);//error report to console if failed
- });
-  });
-  //button to add song to playlist, then refresh
- document.getElementById('addbutton').addEventListener('click', function() {
- trackuri=localStorage.getItem('trackuri');//pulling trackuri from localstorage
-  var uris=[trackuri];//create an array with the trackuri stored within
-  //adding track to playlist using myid, playid, and uris to fill function
- spotifyApi.addTracksToPlaylist(myid,playid,uris).then(function(data) {
-   console.log('Added', data);//logging data returend from spotify to console
- document.getElementById('list').src = document.getElementById('list').src;//refreshing iframe after song added, not working alwyas, seems to need 4+tracks before refreshing actaul playlist iframe
- });
-  });
-//Below is code from spotify for authentication
-     (function() {
-       var stateKey = 'spotify_auth_state';
-       /**
-        * Obtains parameters from the hash of the URL
-        * @return Object
-        */
-       function getHashParams() {
-         var hashParams = {};
-         var e, r = /([^&;=]+)=?([^&;]*)/g,
-             q = window.location.hash.substring(1);
-         while ( e = r.exec(q)) {
-            hashParams[e[1]] = decodeURIComponent(e[2]);
-         }
-         return hashParams;
-       }
-       /**
-        * Generates a random string containing numbers and letters
-        * @param  {number} length The length of the string
-        * @return {string} The generated string
-        */
-       function generateRandomString(length) {
-         var text = '';
-         var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-         for (var i = 0; i < length; i++) {
-           text += possible.charAt(Math.floor(Math.random() * possible.length));
-         }
-         return text;
-       };
-       var userProfileSource = document.getElementById('user-profile-template').innerHTML,
-           userProfileTemplate = Handlebars.compile(userProfileSource),
-           userProfilePlaceholder = document.getElementById('user-profile');
-           oauthSource = document.getElementById('oauth-template').innerHTML,
-           oauthTemplate = Handlebars.compile(oauthSource),
-           oauthPlaceholder = document.getElementById('oauth');
-       var params = getHashParams();
-       var access_token = params.access_token,
-           state = params.state,
-           storedState = localStorage.getItem(stateKey);
-       if (access_token && (state == null || state !== storedState)) {
-         alert('There was an error during the authentication');
-       } else {
-         localStorage.removeItem(stateKey);
-         if (access_token) {
-           $.ajax({
-               url: 'https://api.spotify.com/v1/me',
-               headers: {
-                 'Authorization': 'Bearer ' + access_token
-               },
-                            success: function(response) {
-                    userProfilePlaceholder.innerHTML = userProfileTemplate(response);
-                    localStorage.setItem("accesstoken",access_token);//setting access_token to local storage for use in spotifyApi related functions
-                    var spotifyApi = new SpotifyWebApi();//initalizing API for use in getMe function
-                    spotifyApi.setAccessToken(access_token)//setting access token for spotifyApi
-                    //creating a json for getMe funciton
-                    var getmedata={
-                      url:'https://api.spotify.com/v1/me'
-                    }
-                    //using spotifyApi getme function to get id for use in spotfiyApi functions
-                    spotifyApi.getMe(getmedata).then(function(data) {
-                      console.log('me', data);//loggin data of getMe function
-                      console.log('userid', data["id"]);//pulling id from spotif data
-                      getmedata=data;//setting getmedata to data for json manipulation
-                      console.log(getmedata);//logging to console to ensure json transfetred properly
-                       meid=getmedata["id"];//setting meid to id from spotify getMe
-                      console.log(meid);//logging to console to ensure spotify id is correct
-                      localStorage.setItem('meid',meid);//setting to local storage for use in spotifyapi fucntions
-                    });
-                    $('#login').hide();
-                 $('#loggedin').show();
-               }
-           });
-                       } else {
-             $('#login').show();
-             $('#loggedin').hide();
-         }
-        //spotify login button, code from spotify
-         document.getElementById('login-button').addEventListener('click', function() {
-           var client_id = '1d962f7237714da3a92ba6f6c29d45bf'; // Your client id
-           var redirect_uri = 'https://musicqueue-pwa.firebaseapp.com/playlist_template.html'; // Your redirect uri
-           var state = generateRandomString(16);
-           localStorage.setItem(stateKey, state);
-           var scope = 'playlist-read-private playlist-modify-private user-library-modify user-read-private user-read-email';
-           var url = 'https://accounts.spotify.com/authorize';
-           url += '?response_type=token';
-           url += '&client_id=' + encodeURIComponent(client_id);
-           url += '&scope=' + encodeURIComponent(scope);
-           url += '&redirect_uri=' + encodeURIComponent(redirect_uri);
-           url += '&state=' + encodeURIComponent(state);
-            window.location = url;
-         }, false);
-                }
-  })();
-   </script>
+   });
+    });
+    //search button, passes value enetered to spotifyApi and reports back with jsonData to be utilized in adding a song
+    document.getElementById('searchbutton').addEventListener('click', function() {
+      trackname=document.getElementById('seartext').value;//setting trackname to text in field
+      //spotifyApi is searching for tracks matching name value entered, with current limit of 5 tracks returned
+    spotifyApi.searchTracks(trackname,{limit: 5}).then(function(data) {
+      console.log('Found', data);//logging data from spotifyApi to console to ensure data was returend properly
+      trackj=data;//setting trakj to data for json manipulation
+   console.log('trackj',trackj);//loggin trackj to console to ensure proper transfer of data
+   var trackuri = trackj.tracks.items[0].uri;//pulls track uri out of JSON
+   var trackuri1 = trackj.tracks.items[1].uri;//pulls track uri out of JSON
+   var trackuri2 = trackj.tracks.items[2].uri;//pulls track uri out of JSON
+   var trackuri3 = trackj.tracks.items[3].uri;//pulls track uri out of JSON
+   var trackuri4 = trackj.tracks.items[4].uri;//pulls track uri out of JSON
+   var trackname = trackj.tracks.items[0].name;//pulls track name out of JSON
+   var trackname1 = trackj.tracks.items[1].name;//pulls track name out of JSON
+   var trackname2 = trackj.tracks.items[2].name;//pulls track name out of JSON
+   var trackname3 = trackj.tracks.items[3].name;//pulls track name out of JSON
+   var trackname4 = trackj.tracks.items[4].name;//pulls track name out of JSON
+   var trackartist = trackj.tracks.items[0].artists[0].name;//pulls track artist out of JSON
+   var trackartist1 = trackj.tracks.items[1].artists[0].name;//pulls track artist out of JSON
+   var trackartist2 = trackj.tracks.items[2].artists[0].name;//pulls track artist out of JSON
+   var trackartist3 = trackj.tracks.items[3].artists[0].name;//pulls track artist out of JSON
+   var trackartist4 = trackj.tracks.items[4].artists[0].name;//pulls track artist out of JSON
+   //creating a setting trackuri variable to the uri of the first track in the array of found tracks
+    localStorage.setItem('trackuri', trackuri);//storing uri for use
+    localStorage.setItem('trackuri1', trackuri1);//storing uri for use
+    localStorage.setItem('trackuri2', trackuri2);//storing uri for use
+    localStorage.setItem('trackuri3', trackuri3);//storing uri for use
+    localStorage.setItem('trackuri4', trackuri4);//setting local storage for trackuri to be used for adding song
+   console.log(trackuri);
+   console.log(trackuri1);
+   console.log(trackuri2);
+   console.log(trackuri3);
+   console.log(trackuri4);
+   console.log(trackname);
+   console.log(trackname1);
+   console.log(trackname2);
+   console.log(trackname3);
+   console.log(trackname4);
+   console.log('Artist', trackartist);
+   console.log('Artist', trackartist1);
+   console.log('Artist',trackartist2);
+   console.log('Artist',trackartist3);
+    console.log('Artist',trackartist4);//logging to console to ensure proper uri
+   select.options.add( new Option(trackname  +" "+ trackartist, trackuri) );//setting option in selectbox with songname and artist as text and trackuri as value
+   select.options.add( new Option(trackname1 +" "+ trackartist1, trackuri1) );
+   select.options.add( new Option(trackname2 +" "+ trackartist2, trackuri2) );
+   select.options.add( new Option(trackname3 +" "+ trackartist3, trackuri3) );
+   select.options.add( new Option(trackname4 +" "+ trackartist4, trackuri4) );
+   frag.appendChild(select);//appending the select
+   div.appendChild(frag);//appending the frag in the div containing select
+    }, function(err) {
+      console.error(err);//error report to console if failed
+    });
+     });
+       document.getElementById('button1').addEventListener('click', function() {
+         var trackuris = document.getElementById("selections").value;
+         console.log(trackuris)
+    //trackuri=localStorage.getItem('trackuri');//pulling trackuri from localstorage
+     var uris=[trackuris];//create an array with the trackuri stored within
+     //adding track to playlist using myid, playid, and uris to fill function
+    spotifyApi.addTracksToPlaylist(myid,playid,uris).then(function(data) {
+      console.log('Added', data);//logging data returend from spotify to console
+    document.getElementById('list').src = document.getElementById('list').src;
+    //refreshing iframe after song added, not working alwyas, seems to need 4+tracks before refreshing actaul playlist iframe
+    var select = document.getElementById("selections");
+    $('#selections').empty();//deletes previos entries upon adding song to playlist
+    });
+     });
+</script>
+<script type="text/javascript" src="/scripts/JS/home.js"></script>
   </body>
 </html>

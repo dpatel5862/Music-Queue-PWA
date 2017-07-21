@@ -16,6 +16,8 @@
     <meta name="msapplication-TileImage" content="images/icon-144x144.png">
     <meta name="msapplication-TileColor" content="#18bc9c">
 
+    <script src="spotify-web-api.js"></script>
+    <script src="jquery-3.2.1.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/4.1.1/firebase.js"></script>
     <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
   </head>
@@ -30,7 +32,7 @@
                     <a class="navbar-brand" href="#">Music Queue PWA</a>
                 </div>
                 <div class="collapse navbar-collapse">
-                 <!--  <form class="navbar-form navbar-right" role="search">
+<!--                   <form class="navbar-form navbar-right" role="search">
                     <div class="form-group">
                         <input id="txtEmail" class="form-control" type="email" placeholder="Email">
                         <input id="txtPassword" class="form-control" type="password" placeholder="Password">
@@ -56,11 +58,11 @@
 
 <!--- Sign IN -->
 <div class="container-fluid">
-<div class="container text-center">    
-  <h3 id="signInHeader">Sign In</h3>      
+<div class="container text-center">
   <div class="row">
-    <div class="col-lg-12">
-      <div><center>
+    <div id="intialLogin" class="col-lg-12">
+      <h3 id="signInHeader"><b>STEP 1:</b> Sign In/Sign Up</h3>          
+      <div>
       <form class="form-inline">
       <div class="form-group">
         <input id="txtEmail" class="form-control" type="email" placeholder="Email">
@@ -70,25 +72,73 @@
         <button type="button" id="btnSignUp" class="btn btn-secondary">Sign Up</button>
         <button type="button" id="btnLogout" class="btn btn-primary hide">Log Out</button>
       </form>
-      </center></div>
+      </div>
+    </div>
+    <div class="col-lg-6">
+    <h3 id="spotifyHeader"><b>STEP 2:</b> Authenticate With Spotify</h3>          
+         <div id="login">
+           <!--button to login with Spotify -->
+           <button id="login-button" class="btn btn-primary">Log in with Spotify</button>
+         </div>
+         <div id="loggedin">
+           <div id="user-profile">
+           </div>
+           <div id="oauth">
+           </div>
+         </div>
     </div>
   </div>
   <hr class="featurette-divider">
 </div>
 </div>
 
-<!---Playlist create button + Welcome banner -->
-<div class="container-fluid text-center">
-    <div class="col-lg-4"></div>
 
+<!--Handlebars for area to fill in when login is successful -->
+
+   <script id="user-profile-template" type="text/x-handlebars-template">
+     <!-- <h1>Logged in as {{display_name}}</h1> -->
+     <div class="media">
+       <div class="pull-left">
+         <!-- <img class="media-object" width="150" src="{{images.0.url}}" /> -->
+       </div>
+       <div class="media-body">
+         <dl class="dl-horizontal">
+           <!-- <dt>Display name</dt><dd class="clearfix">{{display_name}}</dd> -->
+           <dt>User: </dt><dd>{{id}}</dd>
+           <dt>Email: </dt><dd>{{email}}</dd>
+           <!-- <dt>Spotify URI</dt><dd><a href="{{external_urls.spotify}}">{{external_urls.spotify}}</a></dd> -->
+           <!-- <dt>Link</dt><dd><a href="{{href}}">{{href}}</a></dd> -->
+           <!-- <dt>Profile Image</dt><dd class="clearfix"><a href="{{images.0.url}}">{{images.0.url}}</a></dd> -->
+           <!-- <dt>Country</dt><dd>{{country}}</dd> -->
+         </dl>
+       </div>
+     </div>
+   </script>
+
+<!--runs oauth-template handlebar, and pulls access token-->
+   <script id="oauth-template" type="text/x-handlebars-template"/>
+     <h2>oAuth info</h2>
+     <dl class="dl-horizontal">
+       <dt>Access token</dt><dd class="text-overflow">{{access_token}}</dd>
+     </dl>
+   </script>
+
+<div class="container-fluid text-center">
+  <div class="col-lg-12">
+  <h3 id="createHeader"><b>STEP 3:</b> Create a Shareable Playlist</h3>
+  </div>
+</div>
+   
+<!---Playlist create button -->
+<div class="container-fluid text-center">
+  <div class="col-lg-4"></div>
   <div class="col-lg-4">
-    <!-- <h4 id="welcomeHeader"></h4><br> -->
-    <form class="form-inline">
+    <!-- <form class="form-inline"> -->
       <div class="form-group">
-        <textarea type="text" class="form-control" id="playlistName" aria-describedby="emailHelp" placeholder="Enter name"></textarea>
+        <textarea type="text" class="form-control" id="name" aria-describedby="emailHelp" placeholder="Enter name"></textarea>
       </div>
-      <button type="button" id="modalSubmit" onclick="showInput()" class="btn btn-primary">Create</button>
-    </form>
+      <button type="submit" id="namebutton" class="btn btn-primary">Create</button>
+    <!-- </form> -->
   </div>
   <div class="col-lg-4"></div>
 </div>
@@ -111,14 +161,13 @@
           <tr> 
             <th>#</th> 
             <th>Party Name</th> 
-            <th>Host</th>  
             <th>Join</th>
           </tr> 
         </thead>  
         <tbody> 
           <tr> 
             <th scope="row">1</th> 
-              <td>Mark</td> 
+              <td id="tablePlaylistName"></td> 
               <td>Otto</td> 
               <td><a class="btn btn-primary btn-sm" href="#" role="button">Join</a></td>
 
@@ -155,11 +204,10 @@
           <tr> 
             <th>#</th> 
             <th>Party Name</th> 
-            <th>Host</th>  
             <th>Join</th>
           </tr> 
         </thead>  
-        <tbody> 
+        <tbody > 
           <tr> 
             <th scope="row">1</th> 
               <td>Mark</td> 
@@ -189,7 +237,12 @@
   </div>
 </div>
 </div>
-      
+
+<p>
+  <ol id="playlistsList">
+  </ol>
+</p>
+
 <hr class="featurette-divider">
 
  <!-- Footer -->
@@ -205,48 +258,178 @@
             </div>
         </footer>
 
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0-alpha.1/handlebars.min.js"></script>
 
-<div class="container-fluid">
-<!-- Modal -->
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-      <div class="modal-content">
-      
-      <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-          </button>
-          <h2 class="modal-title" id="exampleModalLabel">Create a Music Sharing Group!</h2>
-        </div>
+<!--- SPOTIFY AUTH -->
+   <script>
+     (function() {
+       var stateKey = 'spotify_auth_state';
+       /**
+        * Obtains parameters from the hash of the URL
+        * @return Object
+        */
+       function getHashParams() {
+         var hashParams = {};
+         var e, r = /([^&;=]+)=?([^&;]*)/g,
+             q = window.location.hash.substring(1);
+         while ( e = r.exec(q)) {
+            hashParams[e[1]] = decodeURIComponent(e[2]);
+         }
+         return hashParams;
+       }
+        /* Generates a random string containing numbers and letters
+        * @param  {number} length The length of the string
+        * @return {string} The generated string
+        */
+       function generateRandomString(length) {
+         var text = '';
+         var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+         for (var i = 0; i < length; i++) {
+           text += possible.charAt(Math.floor(Math.random() * possible.length));
+         }
+         return text;
+       };
+       var userProfileSource = document.getElementById('user-profile-template').innerHTML,
+           userProfileTemplate = Handlebars.compile(userProfileSource),
+           userProfilePlaceholder = document.getElementById('user-profile');
+           oauthSource = document.getElementById('oauth-template').innerHTML,
+           oauthTemplate = Handlebars.compile(oauthSource),
+           oauthPlaceholder = document.getElementById('oauth');
+       var params = getHashParams();
+       var access_token = params.access_token,
+           state = params.state,
+           storedState = localStorage.getItem(stateKey);
+       if (access_token && (state == null)) {
+         alert('There was an error during the authentication');
+       } else {
+         localStorage.removeItem(stateKey);
+         if (access_token) {
+           $.ajax({
+               url: 'https://api.spotify.com/v1/me',
+               headers: {
+                 'Authorization': 'Bearer ' + access_token
+               },
+                            success: function(response) {
+                    userProfilePlaceholder.innerHTML = userProfileTemplate(response);
+                    localStorage.setItem("accesstoken",access_token);//setting access_token to local storage for use in spotifyApi related functions
+                    var spotifyApi = new SpotifyWebApi();//initalizing API for use in getMe function
+                    spotifyApi.setAccessToken(access_token)//setting access token for spotifyApi
+                    //creating a json for getMe funciton
+                    var getmedata={
+                      url:'https://api.spotify.com/v1/me'
+                    }
+                    //using spotifyApi getme function to get id for use in spotfiyApi functions
+                    spotifyApi.getMe(getmedata).then(function(data) {
+                      console.log('me', data);//loggin data of getMe function
+                      console.log('userid', data["id"]);//pulling id from spotif data
+                      getmedata=data;//setting getmedata to data for json manipulation
+                      console.log(getmedata);//logging to console to ensure json transfetred properly
+                       meid=getmedata["id"];//setting meid to id from spotify getMe
+                      console.log(meid);//logging to console to ensure spotify id is correct
+                      localStorage.setItem('meid',meid);//setting to local storage for use in spotifyapi fucntions
+                    });
+                    spotifyApi.getUserPlaylists().then(function(data) {
+                        console.log(data);
+                      });
+                    $('#login').hide();
+                 $('#loggedin').show();
+               }
+           });
+                       } else {
+             $('#login').show();
+             $('#loggedin').hide();
+         }
+        //spotify login button, code from spotify
+         document.getElementById('login-button').addEventListener('click', function() {
+           localStorage.setItem(stateKey, state);
+           var scope = 'playlist-read-private playlist-modify-private user-library-modify user-read-private user-read-email';
+           var client_id = '1d962f7237714da3a92ba6f6c29d45bf'; // Your client id
+           var redirect_uri = 'https://musicqueue-pwa.firebaseapp.com'; // Your redirect uri
+           var state = generateRandomString(16);
+           localStorage.setItem(stateKey, state);
+           var scope = 'playlist-read-private playlist-modify-private user-library-modify user-read-private user-read-email';
+           var url = 'https://accounts.spotify.com/authorize';
+           url += '?response_type=token';
+           url += '&client_id=' + encodeURIComponent(client_id);
+           url += '&scope=' + encodeURIComponent(scope);
+           url += '&redirect_uri=' + encodeURIComponent(redirect_uri);
+           url += '&state=' + encodeURIComponent(state);
+            window.location = url;
+         }, false);
+                }
+  })();
+   </script>
 
-      <div class="modal-body">
-          <form>
-            <div class="form-group">
-              <center><label for="Name">Name your Music Queue</label></center>
-              <input type="text" class="form-control" id="playlistName" aria-describedby="emailHelp" placeholder="Enter name">
-        <!--Jared's Code-->
-    
-      <script language="JavaScript">
-           function showInput() {
-           var value =  document.getElementById("playlistName").value;   // get value of message
-          localStorage.setItem('val',value); // set value of message in local storage
-          window.location = 'playlist_template.html';
-        } 
-  </script>
+   <!--- Create Playlist scripts -->
+<script>   
+      var globalid;//id for playlist name for playlist creation
+      var playid;//id for playlist name for change of iframe src
+      var meid;//id for user
+      var trackname;//name for searching track
+      //creating a div for the select to be place din
+      var div = document.querySelector("#container2"),
+          frag = document.createDocumentFragment(),//creating a fragment to store select in
+          select = document.createElement("select");//create select element inside div
+          select.id="selections"//setting id of select to allow for manipulation
+      var trackj={"id":'if'};//Json array for use in track search/adding to playlist
+      access_token=localStorage.getItem("accesstoken");//pulls access token from localStorage for autherization
+      var spotifyApi = new SpotifyWebApi();//setting the Spotify API to be used
+      spotifyApi.setAccessToken(access_token)//setting access token for API
+      //button for naming and creating new playlist
+      document.getElementById('namebutton').addEventListener('click', function() {
+    globalid=document.getElementById('name').value;//setting globalid to be value entered into text field
+    console.log(globalid);//logging globalid for testing and validation
+    localStorage.setItem('globalid', globalid);//storing globalid locally for future use
+    //globalid=localStorage.getItem('globalid');//was using to pull global id when in seperate function. now unneccesary for creation but will keep for now
+   //onsole.log(globalid);
+    myid=localStorage.getItem('meid');//pulling meid from local storage, created when logging in to spotify
+    console.log(myid);//logging to be able to ensure myid is correct
+   //creating a json array to be used for creating the playlist
+    var jsonData = {
+      "name":globalid ,
+      "public": false,
+      "collaborative": true
+    }
+    //spotifyApi is creating playlist with myid and data from jsonData
+   spotifyApi.createPlaylist(myid,jsonData)
+   .then(function(data) {
+   console.log('Playlist Created', data);//logging data sent back from Spotify
+   console.log('playlistid', data["id"]);//ensuring id is pulled
+   jsonData=data;//transferring data from spotify into local jsonData to be manipulated
+   console.log(jsonData);//loggin to console to ensure data transferred to jsonData
+    playid=jsonData["id"];
+    localStorage.setItem('playlistid',playid);//setting playid to id of playlist pulled from jsonData
+   console.log(playid);
+     var playID = localStorage.getItem("playlistid");
+     var playlistName = localStorage.getItem("globalid")
+     var spotifyID = localStorage.getItem("meid")
+      var firebaseRef = firebase.database().ref('playlists').push();
+      firebaseRef.child("Name").set(playlistName);
+      firebaseRef.child("URI").set(playID);
+      firebaseRef.child("SpotifyID").set(spotifyID)
+      console.log(playID);
+      console.log(playlistName);
+      localStorage.setItem('Playlist URI for Iframe',playID);//loggin to console to ensure id set as expected  
+   //changing src of iframe to newly created playlist using myid and playid
+    var delayMillis = 2000; //2 second
+    setTimeout(function() {
+    window.location='playlist_template.html';
+    document.getElementById('list').src = "https://open.spotify.com/embed?uri=spotify:user:"+myid+":playlist:"+playid
+  //your code to be executed after 2second
+}, delayMillis);
+   }, function(err) {
+   console.error(err);//error report to console if failed
+   });
+    });
+</script>
+<!-- <script>
+    firebase.database().ref('playlists').on("value", function(snapshot) {
+   console.log(snapshot.val());
+}, function (error) {
+   console.log("Error: " + error.code);
+});
+</script> -->
 
-            </div>
-          </form>
-      </div>
-    
-      <!--   <div class="modal-footer" method="post">
-          <button type="button" onclick="showInput();" id="modalSubmit" class="btn btn-primary">Create</button>
-        </div> -->
-
-      </div>
-      </div>
-    </div>
-  </div>
-</div>
 
     <script src="scripts/JS/modal.js"></script>
     <script src="/service-worker.js"></script>
