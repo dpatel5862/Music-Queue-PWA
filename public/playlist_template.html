@@ -7,15 +7,17 @@
     <script src="jquery-3.2.1.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/4.1.1/firebase.js"></script>
     <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
+    <script type="text/javascript" src="/scripts/JS/home.js"></script>
   </head>
 <body>
- <iframe id="list" src="https://open.spotify.com/user/smacklax007/playlist/7KhRtEOXf2MxGL5FXbK0dp" width="640" height="720" frameborder="0" allowtransparency="true"></iframe>
+ <iframe id="list" src=" " width="640" height="720" frameborder="0" allowtransparency="true"></iframe>
 <script>
 myid=localStorage.getItem('SpotifyID');
 console.log(myid);
 playid=localStorage.getItem('URI')
 console.log(playid);
-document.getElementById('list').src = "https://open.spotify.com/embed?uri=spotify:user:"+myid+":playlist:"+playid</script>
+//document.getElementById('list').src = "https://open.spotify.com/embed?uri=spotify:user:"+myid+":playlist:"+playid
+</script>
 <!--button to name playlist -->
 <input id="name" type="text" />
 <button type="submit" id="namebutton">Submit</button>
@@ -140,6 +142,5 @@ document.getElementById('list').src = "https://open.spotify.com/embed?uri=spotif
     });
      });
 </script>
-<script type="text/javascript" src="/scripts/JS/home.js"></script>
   </body>
 </html>
